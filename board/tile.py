@@ -10,7 +10,7 @@ class Tile:
 
     def __str__(self):
         if self.piece is None:
-            return "X"
+            return " "
         else:
             return self.piece.__str__()
 

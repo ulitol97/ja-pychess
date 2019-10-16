@@ -5,7 +5,5 @@ class Bishop(Piece):
 
     def __init__(self, color):
         super().__init__(color)
+        self.representation = "B"
         self.value = 3
-
-    def __str__(self):
-        return "B"

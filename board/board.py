@@ -1,6 +1,7 @@
 import string
 from board.tile import Tile
 import pieces
+from colorama import Back
 
 # Program constants for each side of the board
 WHITE = True
@@ -35,18 +36,18 @@ class Board:
                         pieces.King(BLACK), pieces.Bishop(BLACK), pieces.Knight(BLACK), pieces.Rook(BLACK)]
 
         # Standard white pieces behind the line of pawns
-        white_pieces = black_pieces.copy()
-        for piece in white_pieces:
-            piece.color = WHITE
+        white_pieces = [pieces.Rook(WHITE), pieces.Knight(WHITE), pieces.Bishop(WHITE), pieces.Queen(WHITE),
+                        pieces.King(WHITE), pieces.Bishop(WHITE), pieces.Knight(WHITE), pieces.Rook(WHITE)]
+
         # Add special pieces
         for i in range (len(self.tiles[self.BOARD_SIZE-1])):
-            self.tiles[self.BOARD_SIZE - 1][i].piece = black_pieces[i]
-            self.tiles[0][i].piece = white_pieces[i]
+            self.tiles[self.BOARD_SIZE - 1][i].piece = white_pieces[i]
+            self.tiles[0][i].piece = black_pieces[i]
 
         # Lines of pawns
         for j in range (self.BOARD_SIZE):
-            self.tiles[self.BOARD_SIZE-2][j].piece = pieces.Pawn(BLACK)
-            self.tiles[1][j].piece = pieces.Pawn(WHITE)
+            self.tiles[self.BOARD_SIZE-2][j].piece = pieces.Pawn(WHITE)
+            self.tiles[1][j].piece = pieces.Pawn(BLACK)
 
     def __str__(self):
         """Returns a human readable representation of the chess board"""
@@ -57,7 +58,12 @@ class Board:
             row_number = str(self.BOARD_SIZE-i)
             board += row_number + "\t"
             for j in range (self.BOARD_SIZE):
+                if i % 2 != 0 and j % 2 == 0 or i % 2 == 0 and j % 2 != 0:
+                    board += Back.LIGHTBLACK_EX
+                else:
+                    board += Back.LIGHTWHITE_EX
                 board += " {} ".format(self.tiles[i][j])
+                board += Back.RESET
             board += ("\t" + row_number + "\n")
 
         return column_letters + "\n" + board + column_letters

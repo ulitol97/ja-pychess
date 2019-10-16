@@ -6,6 +6,7 @@ The current module defines the application entry-point, consisting of:
          - Capable of loading commands from a file
 """
 from board import board
+from colorama import init
 
 
 def ask_player_side():
@@ -25,10 +26,11 @@ def run_game(game_board):
     """Start the infinite interpreter loop"""
     # while True:
     print()
-    print(game_board)
+    print (game_board)
     print()
 
 
+init()
 player_side = ask_player_side()
 game_board = board.Board(player_side)
 run_game(game_board)
