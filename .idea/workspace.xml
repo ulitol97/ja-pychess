@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="293b1fef-0cab-439c-8e11-c86f7a8c3f70" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/board/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/board/board.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/board/tile.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ai/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai/ai.py" beforeDir="false" afterPath="$PROJECT_DIR$/ai/ai.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/board.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/board/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/board/board.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board/tile.py" beforeDir="false" afterPath="$PROJECT_DIR$/board/tile.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/class_diagram.uxf" beforeDir="false" afterPath="$PROJECT_DIR$/class_diagram.uxf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movement/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/movement/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movement/coordinate.py" beforeDir="false" afterPath="$PROJECT_DIR$/movement/coordinate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pieces/bishop.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/bishop.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pieces/king.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/king.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pieces/knight.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/knight.py" afterDir="false" />
@@ -102,7 +94,7 @@
       <option name="presentableId" value="Default" />
       <updated>1571138544899</updated>
       <workItem from="1571138546040" duration="3064000" />
-      <workItem from="1571217228494" duration="8144000" />
+      <workItem from="1571217228494" duration="10158000" />
     </task>
     <servers />
   </component>
@@ -123,6 +115,6 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Practica_Python$main.coverage" NAME="main Coverage Results" MODIFIED="1571227714131" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Practica_Python$main.coverage" NAME="main Coverage Results" MODIFIED="1571236148084" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

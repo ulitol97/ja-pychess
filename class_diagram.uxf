@@ -12,7 +12,7 @@
     </coordinates>
     <panel_attributes>Board
 --
-+ pieces: Piece[][]
++ tiles: Tile[][]
 + current_side: bool
 + movements: Stack
 --
@@ -62,6 +62,7 @@
     </coordinates>
     <panel_attributes>/Piece/
 --
++ tile: Tile
 + position: Coordinate
 + value: int
 + color: bool
@@ -107,6 +108,24 @@
 --
 + execute
 + undo
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1010</x>
+      <y>160</y>
+      <w>280</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Tile
+--
++ position: Coordinate
++ piece: Piece
+--
+
 
 </panel_attributes>
     <additional_attributes/>
