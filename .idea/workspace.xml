@@ -5,14 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/board/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/board/board.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/board/tile.py" beforeDir="false" afterPath="$PROJECT_DIR$/board/tile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/bishop.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/bishop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/king.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/king.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/knight.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/knight.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/pawn.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/pawn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pieces/piece.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/piece.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/queen.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/queen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/rook.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/rook.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -94,7 +87,7 @@
       <option name="presentableId" value="Default" />
       <updated>1571138544899</updated>
       <workItem from="1571138546040" duration="3064000" />
-      <workItem from="1571217228494" duration="12128000" />
+      <workItem from="1571217228494" duration="13972000" />
     </task>
     <servers />
   </component>

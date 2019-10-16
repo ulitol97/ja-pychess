@@ -22,7 +22,7 @@ class Board:
         for i in range(self.BOARD_SIZE):
             row = []
             for j in range (self.BOARD_SIZE):
-                row.append(Tile(i, j))
+                row.append(Tile())
             tiles.append(row)
 
         self.tiles = tiles
@@ -51,12 +51,12 @@ class Board:
 
     def __str__(self):
         """Returns a human readable representation of the chess board"""
-        column_letters = "\t"
+        column_letters = "  "
         board = ""
         for i in range (self.BOARD_SIZE):
             column_letters += " {} ".format(string.ascii_lowercase[i])
             row_number = str(self.BOARD_SIZE-i)
-            board += row_number + "\t"
+            board += row_number + "  "
             for j in range (self.BOARD_SIZE):
                 if i % 2 != 0 and j % 2 == 0 or i % 2 == 0 and j % 2 != 0:
                     board += Back.LIGHTBLACK_EX
@@ -64,7 +64,7 @@ class Board:
                     board += Back.LIGHTWHITE_EX
                 board += " {} ".format(self.tiles[i][j])
                 board += Back.RESET
-            board += ("\t" + row_number + "\n")
+            board += ("  " + row_number + "\n")
 
         return column_letters + "\n" + board + column_letters
 
