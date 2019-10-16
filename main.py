@@ -6,7 +6,7 @@ The current module defines the application entry-point, consisting of:
          - Capable of loading commands from a file
 """
 from board import board
-from colorama import init
+from colorama import init, Fore
 
 
 def ask_player_side():
@@ -15,10 +15,10 @@ def ask_player_side():
     print("Welcome to 'Just Another Python Chess'")
     player_choice = input("On which side would you like to play: black or white [wB]? ").lower()
     if 'w' in player_choice:
-        print("You will play as white")
+        print("You will play as " + Fore.BLUE + "white" + Fore.RESET)
         return board.WHITE
     else:
-        print("You will play as black")
+        print("You will play as " + Fore.RED + "black" + Fore.RESET)
         return board.BLACK
 
 
