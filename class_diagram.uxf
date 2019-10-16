@@ -7,8 +7,8 @@
     <coordinates>
       <x>620</x>
       <y>110</y>
-      <w>210</w>
-      <h>200</h>
+      <w>350</w>
+      <h>290</h>
     </coordinates>
     <panel_attributes>Board
 --
@@ -21,9 +21,15 @@
 (coordinate: Coordinate): bool
 + on_turn_end (): void
 
+
++ __str__ (): string
 + action_reset (): void
-+ action_help (): void
-+ action_move (side: bool): void
++ action_status (): void
++ action_load (filename: string): void
++ action_save (filename: string): void
++ action_undo (): void
++ action_move (side: bool,piece: Coordinate, 
+   destination: Coordinate): void
  ...
 
 </panel_attributes>
@@ -68,8 +74,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>780</x>
-      <y>360</y>
+      <x>910</x>
+      <y>660</y>
       <w>280</w>
       <h>200</h>
     </coordinates>
@@ -88,19 +94,19 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>930</x>
-      <y>100</y>
+      <x>270</x>
+      <y>650</y>
       <w>280</w>
       <h>200</h>
     </coordinates>
     <panel_attributes>Movement
 --
-+ x: int
-+ y: int
++ piece: Piece
++ old_location: Coordinate
++ next_location: Coordinate
 --
-+ __eq__: bool
-+ __add__: Coordinate
-+ __sub__: Coordinate
++ execute
++ undo
 
 </panel_attributes>
     <additional_attributes/>

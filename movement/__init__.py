@@ -1,1 +1,1 @@
-# from <<module>> import <<thing>>
+from movement.coordinate import Coordinate
