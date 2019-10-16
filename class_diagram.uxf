@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <help_text/>
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>110</y>
+      <w>210</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Board
+--
++ pieces: Piece[][]
++ current_side: bool
++ movements: Stack
+--
++ print_board(): void
++ is_valid_position 
+(coordinate: Coordinate): bool
++ on_turn_end (): void
+
++ action_reset (): void
++ action_help (): void
++ action_move (side: bool): void
+ ...
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>150</x>
+      <y>110</y>
+      <w>260</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Interpreter
+--
++ board: Board
+--
++ run (): void
++ parse_command 
+(command: string): bool</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>210</x>
+      <y>360</y>
+      <w>280</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>/Piece/
+--
++ position: Coordinate
++ value: int
++ color: bool
+--
++ get_moves (): Coordinate[]
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>780</x>
+      <y>360</y>
+      <w>280</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Coordinate
+--
++ x: int
++ y: int
+--
++ __eq__: bool
++ __add__: Coordinate
++ __sub__: Coordinate
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>930</x>
+      <y>100</y>
+      <w>280</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Movement
+--
++ x: int
++ y: int
+--
++ __eq__: bool
++ __add__: Coordinate
++ __sub__: Coordinate
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
