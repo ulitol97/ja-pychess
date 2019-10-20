@@ -25,26 +25,42 @@ class Rook(Piece):
 
         # Getting maximum movement in X axis
         for i in range (self.position.x+1, board.Board.BOARD_SIZE):
-            if board.Board.get_piece(Coordinate(i, self.position.y)) is not None:
-                max_x = i-1
+            piece = board.Board.get_piece(Coordinate(i, self.position.y))
+            if piece is not None:
+                if piece.color == self.color:
+                    max_x = i-1
+                else:
+                    max_x = i
                 break
 
         # Getting minimum movement in X axis
         for i in range(self.position.x - 1, - 1, -1):
-            if board.Board.get_piece(Coordinate(i, self.position.y)) is not None:
-                min_x = i+1
+            piece = board.Board.get_piece(Coordinate(i, self.position.y))
+            if piece is not None:
+                if piece.color == self.color:
+                    min_x = i+1
+                else:
+                    min_x = i
                 break
 
         # Getting maximum movement in Y axis
         for j in range(self.position.y + 1, board.Board.BOARD_SIZE):
-            if board.Board.get_piece(Coordinate(self.position.x, j)) is not None:
-                max_y = j-1
+            piece = board.Board.get_piece(Coordinate(self.position.x, j))
+            if piece is not None:
+                if piece.color == self.color:
+                    max_y = j-1
+                else:
+                    max_y = j
                 break
 
         # Getting minimum movement in Y axis
         for j in range(self.position.y - 1, - 1, -1):
-            if board.Board.get_piece(Coordinate(self.position.x, j)) is not None:
-                min_y = j+1
+            piece = board.Board.get_piece(Coordinate(self.position.x, j))
+            if piece is not None:
+                if piece.color == self.color:
+                    min_y = j+1
+                else:
+                    min_y = j
                 break
 
         # Possible moves in the X axis

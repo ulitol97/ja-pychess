@@ -24,8 +24,8 @@ class Bishop(Piece):
         j = self.position.y + 1
 
         # As long as there are no pieces in its path, allow move
-        while board.Board.get_piece(
-                Coordinate(i, j)) is None and i < board.Board.BOARD_SIZE and j < board.Board.BOARD_SIZE:
+        while i < board.Board.BOARD_SIZE and j < board.Board.BOARD_SIZE and board.Board.get_piece(
+                Coordinate(i, j)) is None:
             legal_moves.append(Coordinate(i, j))
             i += 1
             j += 1
@@ -40,7 +40,7 @@ class Bishop(Piece):
         j = self.position.y + 1
 
         # As long as there are no pieces in its path, allow move
-        while board.Board.get_piece(Coordinate(i, j)) is None and i >= 0 and j < board.Board.BOARD_SIZE:
+        while i >= 0 and j < board.Board.BOARD_SIZE and board.Board.get_piece(Coordinate(i, j)) is None:
             legal_moves.append(Coordinate(i, j))
             i -= 1
             j += 1
@@ -55,8 +55,8 @@ class Bishop(Piece):
         j = self.position.y - 1
 
         # As long as there are no pieces in its path, allow move
-        while board.Board.get_piece(
-                Coordinate(i, j)) is None and i < board.Board.BOARD_SIZE and j >= 0:
+        while i < board.Board.BOARD_SIZE and j >= 0 and board.Board.get_piece(
+                Coordinate(i, j)) is None:
             legal_moves.append(Coordinate(i, j))
             i += 1
             j -= 1
@@ -71,8 +71,8 @@ class Bishop(Piece):
         j = self.position.y - 1
 
         # As long as there are no pieces in its path, allow move
-        while board.Board.get_piece(
-                Coordinate(i, j)) is None and i >= 0 and j >= 0:
+        while i >= 0 and j >= 0 and board.Board.get_piece(
+                Coordinate(i, j)) is None:
             legal_moves.append(Coordinate(i, j))
             i -= 1
             j -= 1

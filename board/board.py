@@ -1,7 +1,7 @@
 import string
 from board.tile import Tile
 import pieces
-from colorama import Back
+from colorama import Back, Fore
 
 # Program constants for each side of the board
 from movement import Coordinate
@@ -21,6 +21,9 @@ class Board:
         self.cpu_side = not player_side
         self.movements = []  # Stack with previous moves
         self.turn = WHITE
+        # Keep track of each side king
+        self.white_king = Board.get_piece(Coordinate(7, 4))
+        self.black_king = Board.get_piece(Coordinate(0, 4))
 
     @staticmethod
     def __init_board():
@@ -35,6 +38,11 @@ class Board:
         Board.tiles = tiles
         Board.__place_pieces()
         return tiles
+
+    @staticmethod
+    def action_reset():
+        print("\nResetting game...\n")
+        Board.__init_board()
 
     @staticmethod
     def __place_pieces():
@@ -86,15 +94,53 @@ class Board:
 
     def __end_turn(self):
         """Change player turn after checking for checkmate or stalemate"""
-        self.__check_stalemate()
-        self.__check_checkmate()
-        self.turn = not self.turn  # Reverse turns
+        self.__check_check()
+        # self.turn = not self.turn  # Reverse turns
 
-    def __check_stalemate(self):
-        pass
+    def __check_check(self):
+        """Check if, after doing a move, the rival is in check ("jaque")"""
+        player_next_moves = []
+        for i in range(Board.BOARD_SIZE):
+            for j in range(Board.BOARD_SIZE):
+                piece = Board.get_piece(Coordinate(i, j))
+                if piece is not None and piece.color == self.turn:
+                    player_next_moves += [move for move in piece.get_legal_moves()
+                                          if
+                                          Board.get_piece(move) is None or Board.get_piece(move).color != piece.color]
+        #  We have collected all the places the player can move his pieces.
+        #  If the rival king is among them, its check.
+        if self.turn == WHITE:
+            if self.black_king.position in player_next_moves:
+                print("The " + Fore.RED + "black king" + Fore.RESET + " is in check!")
+                self.__check_checkmate(player_next_moves)
+        else:
+            if self.white_king.position in player_next_moves:
+                print("The " + Fore.BLUE + "white king" + Fore.BLUE + " is in check!")
+                self.__check_checkmate(player_next_moves)
 
-    def __check_checkmate(self):
-        pass
+    def __check_checkmate(self, player_movements):
+        """Check if, after doing a move, the rival is in checkmate ("jaque mate")"""
+        king_movements = []
+        checkmate = True
+        if self.turn == WHITE:
+            king_movements = self.black_king.get_legal_moves()
+        else:
+            king_movements = self.white_king.get_legal_moves()
+
+        for move in king_movements:
+            if move not in player_movements:  # King escaped checkmate
+                checkmate = False
+
+        if checkmate is True:
+            if self.turn == WHITE:
+                print("The " + Fore.RED + "black king" + Fore.RESET + " is in checkmate!")
+                print(Fore.BLUE + "White side wins!" + Fore.RESET)
+            else:
+                print("The " + Fore.BLUE + "white king" + Fore.RESET + " is in checkmate!")
+                print(Fore.RED + "Black side wins!" + Fore.RESET)
+
+            #  Reset game
+            Board.action_reset()
 
     def __str__(self):
         """Returns a human readable representation of the chess board"""
@@ -105,10 +151,28 @@ class Board:
         self.move_piece(Coordinate(5, 1), Coordinate(6, 2))
 
         # White move
+        self.move_piece(Coordinate(6, 2), Coordinate(4, 2))
+        self.move_piece(Coordinate(4, 2), Coordinate(3, 2))
+        self.move_piece(Coordinate(3, 2), Coordinate(2, 2))
+        self.move_piece(Coordinate(2, 2), Coordinate(1, 3))
+        #Pawn 2
         self.move_piece(Coordinate(6, 0), Coordinate(4, 0))
+        self.move_piece(Coordinate(4, 0), Coordinate(3, 0))
+        self.move_piece(Coordinate(3, 0), Coordinate(2, 0))
+        self.move_piece(Coordinate(2, 0), Coordinate(1, 1))
+
+        # Rook
+        for move in Board.get_piece(Coordinate(7,0)).get_legal_moves():
+            print(move)
+        self.move_piece(Coordinate(7, 0), Coordinate(1, 0))
+
+        # Queen
+        self.move_piece(Coordinate(7, 3), Coordinate(6, 2))
+        self.move_piece(Coordinate(6, 2), Coordinate(2, 2))
+        self.move_piece(Coordinate(2, 2), Coordinate(2, 4))
         # self.movements.pop().undo()
 
-        column_letters = "  "
+        column_letters = "   "
         board = ""
         for i in range(self.BOARD_SIZE):
             column_letters += " {} ".format(string.ascii_lowercase[i])
