@@ -18,10 +18,10 @@ class Rook(Piece):
         legal_moves = []
 
         # Get movement limits regarding the position of other pieces on the board
-        max_x = self.position.x
-        min_x = self.position.x
-        max_y = self.position.y
-        min_y = self.position.y
+        max_x = board.Board.BOARD_SIZE-1
+        min_x = 0
+        max_y = board.Board.BOARD_SIZE-1
+        min_y = 0
 
         # Getting maximum movement in X axis
         for i in range (self.position.x+1, board.Board.BOARD_SIZE):

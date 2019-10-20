@@ -83,6 +83,10 @@ class Board:
         legal_moves = piece.get_legal_moves()
         possible_moves = [move for move in legal_moves
                           if Board.get_piece(move) is None or Board.get_piece(move).color != piece.color]
+
+        for move in possible_moves:
+            print(move)
+
         if destination in possible_moves:  # Execute the movement and store in case the user wants to UNDO it
             movement_command = MovementCommand(piece, origin, destination)
             movement_command.execute()
@@ -154,35 +158,21 @@ class Board:
         self.move_piece(Coordinate(5, 1), Coordinate(6, 2))
 
         # White move
-        # self.move_piece(Coordinate(6, 2), Coordinate(4, 2))
-        # self.move_piece(Coordinate(4, 2), Coordinate(3, 2))
-        # self.move_piece(Coordinate(3, 2), Coordinate(2, 2))
-        # self.move_piece(Coordinate(2, 2), Coordinate(1, 3))
+        self.move_piece(Coordinate(6, 2), Coordinate(4, 2))
+        self.move_piece(Coordinate(4, 2), Coordinate(3, 2))
+        self.move_piece(Coordinate(3, 2), Coordinate(2, 2))
+        self.move_piece(Coordinate(2, 2), Coordinate(1, 3))
 
         self.move_piece(Coordinate(6, 3), Coordinate(5, 3))
 
-        # #Pawn 2
-        # self.move_piece(Coordinate(6, 0), Coordinate(4, 0))
-        # self.move_piece(Coordinate(4, 0), Coordinate(3, 0))
-        # self.move_piece(Coordinate(3, 0), Coordinate(2, 0))
-        # self.move_piece(Coordinate(2, 0), Coordinate(1, 1))
-
-        # Rook
-        for move in Board.get_piece(Coordinate(7,0)).get_legal_moves():
-            print(move)
-        self.move_piece(Coordinate(7, 0), Coordinate(1, 0))
-
-        # Knight
-        self.move_piece(Coordinate(7, 1), Coordinate(6, 3))
-        self.move_piece(Coordinate(6, 3), Coordinate(4, 4))
-        self.move_piece(Coordinate(4, 4), Coordinate(2, 5))
 
 
 
         # Queen
         self.move_piece(Coordinate(7, 3), Coordinate(6, 2))
         self.move_piece(Coordinate(6, 2), Coordinate(2, 2))
-        # self.move_piece(Coordinate(2, 2), Coordinate(2, 4))
+
+        self.move_piece(Coordinate(2, 2), Coordinate(2, 4))
         # self.movements.pop().undo()
 
         column_letters = "   "
