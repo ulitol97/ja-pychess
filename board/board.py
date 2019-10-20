@@ -155,6 +155,9 @@ class Board:
         self.move_piece(Coordinate(4, 2), Coordinate(3, 2))
         self.move_piece(Coordinate(3, 2), Coordinate(2, 2))
         self.move_piece(Coordinate(2, 2), Coordinate(1, 3))
+
+        self.move_piece(Coordinate(6, 3), Coordinate(5, 3))
+
         #Pawn 2
         self.move_piece(Coordinate(6, 0), Coordinate(4, 0))
         self.move_piece(Coordinate(4, 0), Coordinate(3, 0))
@@ -166,10 +169,16 @@ class Board:
             print(move)
         self.move_piece(Coordinate(7, 0), Coordinate(1, 0))
 
+        # Bishop
+        self.move_piece(Coordinate(7, 2), Coordinate(2, 7))
+        self.move_piece(Coordinate(2, 7), Coordinate(1, 6))
+        self.move_piece(Coordinate(1, 6), Coordinate(5, 2))
+
+
         # Queen
         self.move_piece(Coordinate(7, 3), Coordinate(6, 2))
         self.move_piece(Coordinate(6, 2), Coordinate(2, 2))
-        self.move_piece(Coordinate(2, 2), Coordinate(2, 4))
+        # self.move_piece(Coordinate(2, 2), Coordinate(2, 4))
         # self.movements.pop().undo()
 
         column_letters = "   "

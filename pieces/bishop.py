@@ -24,15 +24,17 @@ class Bishop(Piece):
         j = self.position.y + 1
 
         # As long as there are no pieces in its path, allow move
-        while i < board.Board.BOARD_SIZE and j < board.Board.BOARD_SIZE and board.Board.get_piece(
-                Coordinate(i, j)) is None:
-            legal_moves.append(Coordinate(i, j))
-            i += 1
-            j += 1
-
-        #  Allow move if the tile is occupied by enemy
-        if Bishop.is_valid_move(Coordinate(i, j)) and board.Board.get_piece(Coordinate(i, j)).color != self.color:
-            legal_moves.append(Coordinate(i, j))
+        while i < board.Board.BOARD_SIZE and j < board.Board.BOARD_SIZE:
+            piece = board.Board.get_piece(Coordinate(i, j))
+            if piece is None:
+                legal_moves.append(Coordinate(i, j))
+                i += 1
+                j += 1
+            elif piece.color != self.color:
+                legal_moves.append(Coordinate(i, j))
+                break
+            else:
+                break
 
         # UP LEFT ----------------------------------------------
 
@@ -40,14 +42,17 @@ class Bishop(Piece):
         j = self.position.y + 1
 
         # As long as there are no pieces in its path, allow move
-        while i >= 0 and j < board.Board.BOARD_SIZE and board.Board.get_piece(Coordinate(i, j)) is None:
-            legal_moves.append(Coordinate(i, j))
-            i -= 1
-            j += 1
-
-        #  Allow move if the tile is occupied by enemy
-        if Bishop.is_valid_move(Coordinate(i, j)) and board.Board.get_piece(Coordinate(i, j)).color != self.color:
-            legal_moves.append(Coordinate(i, j))
+        while i >= 0 and j < board.Board.BOARD_SIZE:
+            piece = board.Board.get_piece(Coordinate(i, j))
+            if piece is None:
+                legal_moves.append(Coordinate(i, j))
+                i -= 1
+                j += 1
+            elif piece.color != self.color:
+                legal_moves.append(Coordinate(i, j))
+                break
+            else:
+                break
 
         # DOWN RIGHT ----------------------------------------------
 
@@ -55,15 +60,17 @@ class Bishop(Piece):
         j = self.position.y - 1
 
         # As long as there are no pieces in its path, allow move
-        while i < board.Board.BOARD_SIZE and j >= 0 and board.Board.get_piece(
-                Coordinate(i, j)) is None:
-            legal_moves.append(Coordinate(i, j))
-            i += 1
-            j -= 1
-
-        #  Allow move if the tile is occupied by enemy
-        if Bishop.is_valid_move(Coordinate(i, j)) and board.Board.get_piece(Coordinate(i, j)).color != self.color:
-            legal_moves.append(Coordinate(i, j))
+        while i < board.Board.BOARD_SIZE and j >= 0:
+            piece = board.Board.get_piece(Coordinate(i, j))
+            if piece is None:
+                legal_moves.append(Coordinate(i, j))
+                i += 1
+                j -= 1
+            elif piece.color != self.color:
+                legal_moves.append(Coordinate(i, j))
+                break
+            else:
+                break
 
         # DOWN LEFT ----------------------------------------------
 
@@ -71,14 +78,16 @@ class Bishop(Piece):
         j = self.position.y - 1
 
         # As long as there are no pieces in its path, allow move
-        while i >= 0 and j >= 0 and board.Board.get_piece(
-                Coordinate(i, j)) is None:
-            legal_moves.append(Coordinate(i, j))
-            i -= 1
-            j -= 1
-
-        #  Allow move if the tile is occupied by enemy
-        if Bishop.is_valid_move(Coordinate(i, j)) and board.Board.get_piece(Coordinate(i, j)).color != self.color:
-            legal_moves.append(Coordinate(i, j))
+        while i >= 0 and j >= 0:
+            piece = board.Board.get_piece(Coordinate(i, j))
+            if piece is None:
+                legal_moves.append(Coordinate(i, j))
+                i -= 1
+                j -= 1
+            elif piece.color != self.color:
+                legal_moves.append(Coordinate(i, j))
+                break
+            else:
+                break
 
         return legal_moves
