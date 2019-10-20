@@ -22,20 +22,25 @@ class Pawn(Piece):
 
         # Determine legal coordinate destinations
         legal_moves = []
-        if Pawn.is_valid_move(self.position + Coordinate(0, mov_y)):
-            legal_moves.append(self.position + Coordinate(0, mov_y))
+        if Pawn.is_valid_move(
+                self.position + Coordinate(mov_y, 0)) and board.Board.get_piece(
+                self.position + Coordinate(mov_y, 0)) is None:
+            legal_moves.append(self.position + Coordinate(mov_y, 0))
+
         if not self.has_moved:
-            if Pawn.is_valid_move(self.position + Coordinate(0, mov_y * 2)):
-                legal_moves.append(self.position + Coordinate(0, mov_y * 2))
+            if Pawn.is_valid_move(
+                    self.position + Coordinate(mov_y * 2, 0)) and board.Board.get_piece(
+                    self.position + Coordinate(mov_y * 2, 0)) is None:
+                legal_moves.append(self.position + Coordinate(mov_y * 2, 0))
 
         # Determine legal coordinates if pawn can eat diagonally
-        if Pawn.is_valid_move(self.position + Coordinate(1, mov_y)):
-            other_piece = board.Board.get_piece(self.position + Coordinate(1, mov_y))
+        if Pawn.is_valid_move(self.position + Coordinate(mov_y, 1)):
+            other_piece = board.Board.get_piece(self.position + Coordinate(mov_y, 1))
             if other_piece is not None and other_piece.color != self.color:
-                legal_moves.append(self.position + Coordinate(1, mov_y))
+                legal_moves.append(self.position + Coordinate(mov_y, 1))
 
-        if Pawn.is_valid_move(self.position + Coordinate(-1, mov_y)):
-            other_piece = board.Board.get_piece(self.position + Coordinate(-1, mov_y))
+        if Pawn.is_valid_move(self.position + Coordinate(mov_y, -1)):
+            other_piece = board.Board.get_piece(self.position + Coordinate(mov_y, -1))
             if other_piece is not None and other_piece.color != self.color:
-                legal_moves.append(self.position + Coordinate(-1, mov_y))
+                legal_moves.append(self.position + Coordinate(mov_y, -1))
         return legal_moves

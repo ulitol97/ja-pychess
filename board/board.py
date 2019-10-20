@@ -84,9 +84,14 @@ class Board:
 
     def __str__(self):
         """Returns a human readable representation of the chess board"""
-        print(len(Board.get_piece(Coordinate(0, 1)).get_legal_moves()))
+        print(len(Board.get_piece(Coordinate(1, 1)).get_legal_moves()))
+        legal = Board.get_piece(Coordinate(1, 1)).get_legal_moves()
 
-        self.move_piece(Coordinate(0, 1), Coordinate(2, 2))
+        # self.move_piece(Coordinate(1, 1), Coordinate(3, 1))
+        # self.move_piece(Coordinate(3, 1), Coordinate(4, 1))
+        # self.move_piece(Coordinate(4, 1), Coordinate(5, 1))
+        # self.move_piece(Coordinate(5, 1), Coordinate(6, 2))
+
 
         column_letters = "  "
         board = ""
