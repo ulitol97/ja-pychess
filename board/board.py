@@ -120,12 +120,15 @@ class Board:
 
     def __check_checkmate(self, player_movements):
         """Check if, after doing a move, the rival is in checkmate ("jaque mate")"""
-        king_movements = []
         checkmate = True
         if self.turn == WHITE:
             king_movements = self.black_king.get_legal_moves()
+            king_movements = [move for move in king_movements
+                              if Board.get_piece(move) is None or Board.get_piece(move).color != BLACK]
         else:
             king_movements = self.white_king.get_legal_moves()
+            king_movements = [move for move in king_movements
+                              if Board.get_piece(move) is None or Board.get_piece(move).color != WHITE]
 
         for move in king_movements:
             if move not in player_movements:  # King escaped checkmate
@@ -151,28 +154,29 @@ class Board:
         self.move_piece(Coordinate(5, 1), Coordinate(6, 2))
 
         # White move
-        self.move_piece(Coordinate(6, 2), Coordinate(4, 2))
-        self.move_piece(Coordinate(4, 2), Coordinate(3, 2))
-        self.move_piece(Coordinate(3, 2), Coordinate(2, 2))
-        self.move_piece(Coordinate(2, 2), Coordinate(1, 3))
+        # self.move_piece(Coordinate(6, 2), Coordinate(4, 2))
+        # self.move_piece(Coordinate(4, 2), Coordinate(3, 2))
+        # self.move_piece(Coordinate(3, 2), Coordinate(2, 2))
+        # self.move_piece(Coordinate(2, 2), Coordinate(1, 3))
 
         self.move_piece(Coordinate(6, 3), Coordinate(5, 3))
 
-        #Pawn 2
-        self.move_piece(Coordinate(6, 0), Coordinate(4, 0))
-        self.move_piece(Coordinate(4, 0), Coordinate(3, 0))
-        self.move_piece(Coordinate(3, 0), Coordinate(2, 0))
-        self.move_piece(Coordinate(2, 0), Coordinate(1, 1))
+        # #Pawn 2
+        # self.move_piece(Coordinate(6, 0), Coordinate(4, 0))
+        # self.move_piece(Coordinate(4, 0), Coordinate(3, 0))
+        # self.move_piece(Coordinate(3, 0), Coordinate(2, 0))
+        # self.move_piece(Coordinate(2, 0), Coordinate(1, 1))
 
         # Rook
         for move in Board.get_piece(Coordinate(7,0)).get_legal_moves():
             print(move)
         self.move_piece(Coordinate(7, 0), Coordinate(1, 0))
 
-        # Bishop
-        self.move_piece(Coordinate(7, 2), Coordinate(2, 7))
-        self.move_piece(Coordinate(2, 7), Coordinate(1, 6))
-        self.move_piece(Coordinate(1, 6), Coordinate(5, 2))
+        # Knight
+        self.move_piece(Coordinate(7, 1), Coordinate(6, 3))
+        self.move_piece(Coordinate(6, 3), Coordinate(4, 4))
+        self.move_piece(Coordinate(4, 4), Coordinate(2, 5))
+
 
 
         # Queen
