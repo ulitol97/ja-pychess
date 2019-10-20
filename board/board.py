@@ -87,10 +87,11 @@ class Board:
         print(len(Board.get_piece(Coordinate(1, 1)).get_legal_moves()))
         legal = Board.get_piece(Coordinate(1, 1)).get_legal_moves()
 
-        # self.move_piece(Coordinate(1, 1), Coordinate(3, 1))
-        # self.move_piece(Coordinate(3, 1), Coordinate(4, 1))
-        # self.move_piece(Coordinate(4, 1), Coordinate(5, 1))
-        # self.move_piece(Coordinate(5, 1), Coordinate(6, 2))
+        self.move_piece(Coordinate(1, 1), Coordinate(3, 1))
+        self.move_piece(Coordinate(3, 1), Coordinate(4, 1))
+        self.move_piece(Coordinate(4, 1), Coordinate(5, 1))
+        self.move_piece(Coordinate(5, 1), Coordinate(6, 2))
+        self.movements.pop().undo()
 
 
         column_letters = "  "
