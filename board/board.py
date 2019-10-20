@@ -97,6 +97,7 @@ class Board:
                 board += " {} ".format(self.tiles[i][j])
                 board += Back.RESET
             board += ("  " + row_number + "\n")
-        print (Board.tiles[0][7].piece)
-        print(len(Board.tiles[0][7].piece.get_legal_moves()))
+        print (Board.tiles[0][1].piece)
+        print(len(Board.tiles[0][1].piece.get_legal_moves()))
+        print(Board.tiles[0][1].piece.get_legal_moves()[2])
         return column_letters + "\n" + board + column_letters

@@ -34,7 +34,8 @@ class Piece(ABC):
     @staticmethod
     def is_valid_move(coordinate):
         if coordinate.x >= board.Board.BOARD_SIZE or coordinate.y >= board.Board.BOARD_SIZE:
-            if coordinate.x < 0 or coordinate.y < 0:
-                return False
-        return True
+            return False
+        if coordinate.x < 0 or coordinate.y < 0:
+            return False
 
+        return True

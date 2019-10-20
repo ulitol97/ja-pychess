@@ -47,11 +47,6 @@ class Rook(Piece):
                 min_y = j+1
                 break
 
-        print (min_x)
-        print (max_x)
-        print (min_y)
-        print (max_y)
-
         # Possible moves in the X axis
         for i in range (min_x, max_x + 1):
             if i != self.position.x:
