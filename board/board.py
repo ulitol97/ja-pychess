@@ -1,14 +1,16 @@
+import re
 import string
+from pathlib import Path
 from board.tile import Tile
 import pieces
+from movement import Coordinate
+from movement.movement_command import MovementCommand
 from colorama import Back, Fore
 
 # Program constants for each side of the board
-from movement import Coordinate
-from movement.movement_command import MovementCommand
-
 WHITE = True
 BLACK = False
+LETTERS = {letter: str(index) for index, letter in enumerate(string.ascii_lowercase, start=1)}
 
 
 class Board:
@@ -39,10 +41,93 @@ class Board:
         Board.__place_pieces()
         return tiles
 
+    # All actions triggered by user commands ----------------------------------------------
     @staticmethod
     def action_reset():
+        """Restart the state of the board to start a new game from zero """
         print("\nResetting game...\n")
         Board.__init_board()
+        return True  # Returning true means the interpreter must re-print the board after executing the command
+
+    def action_move(self, input):
+        """Move a chess piece of the board if it exists and if it is of your color.
+        Format: move <<origin>> <<destiny>>. Example: move a2 a3."""
+        # First parse input
+        split_input = input.split()
+        if len(split_input != 3):
+            print("The command has been invoked incorrectly.\nSyntax is: move <<origin>> <<destination>>."
+                  "Run like: 'move a2 a3'")
+            return False
+
+        # Validate input
+        pattern = re.compile("^([a-h][1-8])$")
+        if not (pattern.match(split_input[1]) and pattern.match(split_input[2])):
+            print("The command has been invoked incorrectly.\nSyntax is: move <<origin>> <<destination>>."
+                  "Run like: 'move a2 a3'")
+            return False
+        else:
+            # Command correctly formulated
+            origin_coord_y = LETTERS[split_input[1][1:]] - 1  # Get letter coordinate
+            origin_coord_x = Board.BOARD_SIZE - (int(split_input[1][:-1])) # Get number
+
+            dest_coord_y = LETTERS[split_input[2][1:]] - 1  # Get letter coordinate
+            dest_coord_x = Board.BOARD_SIZE - (int(split_input[2][:-1]))  # Get number
+
+            self.move_piece(Coordinate(origin_coord_x, origin_coord_y), Coordinate(dest_coord_x, dest_coord_y))
+            return True
+
+
+
+    @staticmethod
+    def action_status():
+        """Show the amount of pieces each color has on the board."""
+        game_pieces = []
+        for i in range (Board.BOARD_SIZE):
+            for j in range (Board.BOARD_SIZE):
+                if Board.get_piece(Coordinate(i, j)):
+                    pieces.append(Board.get_piece(Coordinate(i, j)))
+
+        white_pieces = [piece for piece in game_pieces if piece.color == WHITE]
+        black_pieces = [piece for piece in game_pieces if piece.color == BLACK]
+
+        print ("\n MATCH STATUS:\n")
+        print("\t-->" + Fore.BLUE + "White side: " + Fore.RESET + "{0} pieces alive, {1} death.".format(
+            len([piece for piece in white_pieces if piece.active is True]),
+            len([piece for piece in white_pieces if piece.active is False])))
+        print("\t-->" + Fore.RED + "Black side: " + Fore.RESET + "{0} pieces alive, {1} death.".format(
+            len([piece for piece in black_pieces if piece.active is True]),
+            len([piece for piece in black_pieces if piece.active is False])))
+
+        return False
+
+    def action_undo(self):
+        """Rewind the match to the moment before you did your previous move"""
+        if len(self.movements) < 2:
+            print("Can't undo moves if no moves have been made")
+            return False
+        else:
+            # Undo twice, my turn and enemy turn
+            self.movements.pop().undo()
+            self.movements.pop().undo()
+            return True
+        pass
+
+    @staticmethod
+    def action_exec(input_file):
+        """Run all the commands stored in the file specified as input (as long as they are valid).
+        Example: exec path-to-file"""
+        filepath = Path(input_file)
+        if not filepath.is_file():
+            print("Could not find the specific file")
+            return False
+
+        with open(input_file) as file:
+            commands = file.readlines()
+
+        commands = [x.strip() for x in commands]
+        return commands
+
+    # -------------------------------------------------------------------------------------
 
     @staticmethod
     def __place_pieces():
@@ -151,30 +236,6 @@ class Board:
 
     def __str__(self):
         """Returns a human readable representation of the chess board"""
-        # Black moves
-        self.move_piece(Coordinate(1, 1), Coordinate(3, 1))
-        self.move_piece(Coordinate(3, 1), Coordinate(4, 1))
-        self.move_piece(Coordinate(4, 1), Coordinate(5, 1))
-        self.move_piece(Coordinate(5, 1), Coordinate(6, 2))
-
-        # White move
-        self.move_piece(Coordinate(6, 2), Coordinate(4, 2))
-        self.move_piece(Coordinate(4, 2), Coordinate(3, 2))
-        self.move_piece(Coordinate(3, 2), Coordinate(2, 2))
-        self.move_piece(Coordinate(2, 2), Coordinate(1, 3))
-
-        self.move_piece(Coordinate(6, 3), Coordinate(5, 3))
-
-
-
-
-        # Queen
-        self.move_piece(Coordinate(7, 3), Coordinate(6, 2))
-        self.move_piece(Coordinate(6, 2), Coordinate(2, 2))
-
-        self.move_piece(Coordinate(2, 2), Coordinate(2, 4))
-        # self.movements.pop().undo()
-
         column_letters = "   "
         board = ""
         for i in range(self.BOARD_SIZE):
