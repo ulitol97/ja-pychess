@@ -5,6 +5,7 @@ from colorama import Back
 
 # Program constants for each side of the board
 from movement import Coordinate
+from movement.movement_command import MovementCommand
 
 WHITE = True
 BLACK = False
@@ -18,6 +19,7 @@ class Board:
         self.__init_board()
         self.player_side = player_side
         self.cpu_side = not player_side
+        self.movements = []  # Stack with previous moves
 
     @staticmethod
     def __init_board():
@@ -50,7 +52,7 @@ class Board:
             Board.tiles[Board.BOARD_SIZE - 1][i].piece.position = Coordinate(Board.BOARD_SIZE - 1, i)
 
             Board.tiles[0][i].piece = black_pieces[i]
-            Board.tiles[0][i].piece.position = Coordinate(0, 1)
+            Board.tiles[0][i].piece.position = Coordinate(0, i)
 
         # Lines of pawns
         for j in range(Board.BOARD_SIZE):
@@ -66,10 +68,18 @@ class Board:
 
     def move_piece(self, origin, destination):
         piece = Board.get_piece(origin)
+        if piece is None:  # Return if there is no piece in the chosen side
+            return False
+        # Get all possible moves of the piece and filter those that move to an empty or enemy occupied tile
         possible_moves = [move for move in piece.get_legal_moves()
                           if Board.get_piece(move) is None or Board.get_piece(move).color != piece.color]
-        if destination in possible_moves:
-            return  # Nuevo comando de movimiento a ejecutar y guardar en el stack del tablero
+        if destination in possible_moves:  # Execute the movement and store in case the user wants to UNDO it
+            movement_command = MovementCommand(piece, origin, destination)
+            movement_command.execute()
+            self.movements.append(movement_command)
+            return True
+        else:
+            return False
 
     def __str__(self):
         """Returns a human readable representation of the chess board"""
@@ -87,6 +97,6 @@ class Board:
                 board += " {} ".format(self.tiles[i][j])
                 board += Back.RESET
             board += ("  " + row_number + "\n")
-
-        coords = [Coordinate(0, 0), Coordinate(1, 1)]
+        print (Board.tiles[0][7].piece)
+        print(len(Board.tiles[0][7].piece.get_legal_moves()))
         return column_letters + "\n" + board + column_letters

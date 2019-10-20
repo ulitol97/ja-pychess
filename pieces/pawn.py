@@ -25,8 +25,17 @@ class Pawn(Piece):
         if Pawn.is_valid_move(self.position + Coordinate(0, mov_y)):
             legal_moves.append(self.position + Coordinate(0, mov_y))
         if not self.has_moved:
-            if Pawn.is_valid_move(self.position + Coordinate(0, mov_y*2)):
-                legal_moves.append(self.position + Coordinate(0, mov_y*2))
+            if Pawn.is_valid_move(self.position + Coordinate(0, mov_y * 2)):
+                legal_moves.append(self.position + Coordinate(0, mov_y * 2))
 
+        # Determine legal coordinates if pawn can eat diagonally
+        if Pawn.is_valid_move(self.position + Coordinate(1, mov_y)):
+            other_piece = board.Board.get_piece(self.position + Coordinate(1, mov_y))
+            if other_piece is not None and other_piece.color != self.color:
+                legal_moves.append(self.position + Coordinate(1, mov_y))
+
+        if Pawn.is_valid_move(self.position + Coordinate(-1, mov_y)):
+            other_piece = board.Board.get_piece(self.position + Coordinate(-1, mov_y))
+            if other_piece is not None and other_piece.color != self.color:
+                legal_moves.append(self.position + Coordinate(-1, mov_y))
         return legal_moves
-
