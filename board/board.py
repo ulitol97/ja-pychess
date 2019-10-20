@@ -20,6 +20,7 @@ class Board:
         self.player_side = player_side
         self.cpu_side = not player_side
         self.movements = []  # Stack with previous moves
+        self.turn = WHITE
 
     @staticmethod
     def __init_board():
@@ -68,7 +69,7 @@ class Board:
 
     def move_piece(self, origin, destination):
         piece = Board.get_piece(origin)
-        if piece is None:  # Return if there is no piece in the chosen side
+        if piece is None or piece.color != self.turn:  # Return no piece or enemy piece was chose
             return False
         # Get all possible moves of the piece and filter those that move to an empty or enemy occupied tile
         legal_moves = piece.get_legal_moves()
@@ -78,21 +79,34 @@ class Board:
             movement_command = MovementCommand(piece, origin, destination)
             movement_command.execute()
             self.movements.append(movement_command)
+            self.__end_turn()
             return True
         else:
             return False
 
+    def __end_turn(self):
+        """Change player turn after checking for checkmate or stalemate"""
+        self.__check_stalemate()
+        self.__check_checkmate()
+        self.turn = not self.turn  # Reverse turns
+
+    def __check_stalemate(self):
+        pass
+
+    def __check_checkmate(self):
+        pass
+
     def __str__(self):
         """Returns a human readable representation of the chess board"""
-        print(len(Board.get_piece(Coordinate(1, 1)).get_legal_moves()))
-        legal = Board.get_piece(Coordinate(1, 1)).get_legal_moves()
-
+        # Black moves
         self.move_piece(Coordinate(1, 1), Coordinate(3, 1))
         self.move_piece(Coordinate(3, 1), Coordinate(4, 1))
         self.move_piece(Coordinate(4, 1), Coordinate(5, 1))
         self.move_piece(Coordinate(5, 1), Coordinate(6, 2))
-        self.movements.pop().undo()
 
+        # White move
+        self.move_piece(Coordinate(6, 0), Coordinate(4, 0))
+        # self.movements.pop().undo()
 
         column_letters = "  "
         board = ""

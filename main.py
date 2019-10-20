@@ -26,7 +26,12 @@ def run_game(game_board):
     """Start the infinite interpreter loop"""
     # while True:
     print()
+    if game_board.turn == board.WHITE:
+        print("Turn of " + Fore.BLUE + "white" + Fore.RESET)
+    else:
+        print("Turn of " + Fore.RED + "black" + Fore.RESET)
     print (game_board)
+    # Input command
     print()
 
 
