@@ -71,7 +71,8 @@ class Board:
         if piece is None:  # Return if there is no piece in the chosen side
             return False
         # Get all possible moves of the piece and filter those that move to an empty or enemy occupied tile
-        possible_moves = [move for move in piece.get_legal_moves()
+        legal_moves = piece.get_legal_moves()
+        possible_moves = [move for move in legal_moves
                           if Board.get_piece(move) is None or Board.get_piece(move).color != piece.color]
         if destination in possible_moves:  # Execute the movement and store in case the user wants to UNDO it
             movement_command = MovementCommand(piece, origin, destination)
@@ -83,6 +84,10 @@ class Board:
 
     def __str__(self):
         """Returns a human readable representation of the chess board"""
+        print(len(Board.get_piece(Coordinate(0, 1)).get_legal_moves()))
+
+        self.move_piece(Coordinate(0, 1), Coordinate(2, 2))
+
         column_letters = "  "
         board = ""
         for i in range(self.BOARD_SIZE):
@@ -94,10 +99,13 @@ class Board:
                     board += Back.LIGHTBLACK_EX
                 else:
                     board += Back.LIGHTWHITE_EX
-                board += " {} ".format(self.tiles[i][j])
+
+                piece = Board.get_piece(Coordinate(i, j))
+                if piece is not None and piece.active is True:
+                    board += " {} ".format(piece)
+                else:
+                    board += "   "
+
                 board += Back.RESET
             board += ("  " + row_number + "\n")
-        print (Board.tiles[0][1].piece)
-        print(len(Board.tiles[0][1].piece.get_legal_moves()))
-        print(Board.tiles[0][1].piece.get_legal_moves()[2])
         return column_letters + "\n" + board + column_letters
