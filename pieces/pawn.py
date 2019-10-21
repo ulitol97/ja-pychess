@@ -1,3 +1,5 @@
+from typing import List
+
 from board import board
 from movement import Coordinate
 from pieces.piece import Piece
@@ -5,27 +7,26 @@ from pieces.piece import Piece
 
 class Pawn(Piece):
     """The Pawn represents a chess piece capable of forward movement and attacking other pieces diagonally."""
-    representation = "P"
-    value = 1
+    representation: str = "P"
+    value: int = 1
 
-    def __init__(self, color):
+    def __init__(self, color: bool) -> None:
         super().__init__(color)
-        self.representation = "P"
-        self.value = 1
 
-    def get_legal_moves(self):
+    def get_legal_moves(self) -> List[Coordinate]:
         """Define Pawn legal moves. Move forward one tile or two in case it has not moved yet"""
+        legal_moves: List[Coordinate] = []
+
         if not self.active:
-            return
+            return legal_moves
 
         # Determine pawns moving direction
         if self.color == board.WHITE:
-            mov_y = -1
+            mov_y: int = -1
         else:
-            mov_y = 1
+            mov_y: int = 1
 
         # Determine legal coordinate destinations
-        legal_moves = []
         if Pawn.is_valid_move(
                 self.position + Coordinate(mov_y, 0)) and board.Board.get_piece(
                 self.position + Coordinate(mov_y, 0)) is None:

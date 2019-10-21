@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="293b1fef-0cab-439c-8e11-c86f7a8c3f70" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/board/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/board/board.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/board/tile.py" beforeDir="false" afterPath="$PROJECT_DIR$/board/tile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/movement/coordinate.py" beforeDir="false" afterPath="$PROJECT_DIR$/movement/coordinate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movement/movement_command.py" beforeDir="false" afterPath="$PROJECT_DIR$/movement/movement_command.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pieces/bishop.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/bishop.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pieces/king.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/king.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pieces/knight.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/knight.py" afterDir="false" />
@@ -57,7 +53,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.king">
+  <component name="RunManager" selected="Python.main">
     <configuration name="board" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Practica_Python" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -126,8 +122,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.king" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.king" />
         <item itemvalue="Python.board" />
       </list>
     </recent_temporary>
@@ -148,7 +144,7 @@
       <workItem from="1571571700305" duration="75000" />
       <workItem from="1571584081967" duration="33560000" />
       <workItem from="1571623065277" duration="51000" />
-      <workItem from="1571648043975" duration="2101000" />
+      <workItem from="1571648043975" duration="3438000" />
     </task>
     <servers />
   </component>
@@ -178,17 +174,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pieces/rook.py</url>
-          <line>38</line>
+          <line>40</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pieces/rook.py</url>
-          <line>77</line>
+          <line>79</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pieces/rook.py</url>
-          <line>28</line>
+          <line>30</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
@@ -202,7 +198,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Practica_Python$main.coverage" NAME="main Coverage Results" MODIFIED="1571622781358" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Practica_Python$main.coverage" NAME="main Coverage Results" MODIFIED="1571651335244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Practica_Python$board.coverage" NAME="board Coverage Results" MODIFIED="1571617783076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/board" />
   </component>
 </project>

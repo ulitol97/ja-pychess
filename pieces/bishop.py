@@ -1,3 +1,5 @@
+from typing import List
+
 import board
 from movement import Coordinate
 from pieces.piece import Piece
@@ -5,30 +7,28 @@ from pieces.piece import Piece
 
 class Bishop(Piece):
     """The Bishop represents a chess piece capable of diagonal movement."""
-    representation = "B"
-    value = 3
+    representation: str = "B"
+    value: int = 3
 
-    def __init__(self, color):
+    def __init__(self, color: bool) -> None:
         super().__init__(color)
-        self.representation = "B"
-        self.value = 3
 
-    def get_legal_moves(self):
+    def get_legal_moves(self) -> List[Coordinate]:
         """Define Bishop legal moves. Move diagonally as much as desired"""
+        legal_moves: List[Coordinate] = []
+
         if not self.active:
-            return
+            return legal_moves
 
         # Determine legal coordinate destinations
-        legal_moves = []
-
         # UP RIGHT ----------------------------------------------
 
-        i = self.position.x + 1
-        j = self.position.y + 1
+        i: int = self.position.x + 1
+        j: int = self.position.y + 1
 
         # As long as there are no pieces in its path, allow move
         while i < board.Board.BOARD_SIZE and j < board.Board.BOARD_SIZE:
-            piece = board.Board.get_piece(Coordinate(i, j))
+            piece: Piece = board.Board.get_piece(Coordinate(i, j))
             if piece is None:
                 legal_moves.append(Coordinate(i, j))
                 i += 1
@@ -46,7 +46,7 @@ class Bishop(Piece):
 
         # As long as there are no pieces in its path, allow move
         while i >= 0 and j < board.Board.BOARD_SIZE:
-            piece = board.Board.get_piece(Coordinate(i, j))
+            piece: Piece = board.Board.get_piece(Coordinate(i, j))
             if piece is None:
                 legal_moves.append(Coordinate(i, j))
                 i -= 1
@@ -64,7 +64,7 @@ class Bishop(Piece):
 
         # As long as there are no pieces in its path, allow move
         while i < board.Board.BOARD_SIZE and j >= 0:
-            piece = board.Board.get_piece(Coordinate(i, j))
+            piece: Piece = board.Board.get_piece(Coordinate(i, j))
             if piece is None:
                 legal_moves.append(Coordinate(i, j))
                 i += 1
@@ -82,7 +82,7 @@ class Bishop(Piece):
 
         # As long as there are no pieces in its path, allow move
         while i >= 0 and j >= 0:
-            piece = board.Board.get_piece(Coordinate(i, j))
+            piece: Piece = board.Board.get_piece(Coordinate(i, j))
             if piece is None:
                 legal_moves.append(Coordinate(i, j))
                 i -= 1
