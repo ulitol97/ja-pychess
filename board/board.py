@@ -23,7 +23,8 @@ class Board:
         self.__init_board()
         self.player_side = player_side
         self.cpu_side = not player_side
-        self.movements = []  # Stack with previous moves
+        self.previous_movements = []  # Stack with previous moves
+        self.future_movements = []  # Stack with moves to be redone
         self.turn = WHITE
         # Keep track of each side king
         self.white_king = Board.get_piece(Coordinate(7, 4))
@@ -127,12 +128,28 @@ class Board:
 
     def action_undo(self):
         """Rewind the match to the moment before you did your previous move"""
-        if len(self.movements) == 0:
+        if len(self.previous_movements) == 0:
             print("Can't undo moves if no moves have been made")
             return False
         else:
             # Undo last turn
-            self.movements.pop().undo()
+            prev_move = self.previous_movements.pop()
+            self.future_movements.append(prev_move)
+            prev_move.undo()
+            print("Undone last turns")
+            self.turn = not self.turn
+            return True
+
+    def action_redo(self):
+        """Redo a move that was just undone"""
+        if len(self.future_movements) == 0:
+            print("Can't redo any moves")
+            return False
+        else:
+            # Redo last undo
+            future_move = self.future_movements.pop()
+            self.previous_movements.append(future_move)
+            future_move.execute()
             print("Undone last turns")
             self.turn = not self.turn
             return True
@@ -213,7 +230,8 @@ class Board:
         if destination in possible_moves:  # Execute the movement and store in case the user wants to UNDO it
             movement_command = MovementCommand(piece, origin, destination)
             movement_command.execute()
-            self.movements.append(movement_command)
+            self.previous_movements.append(movement_command)
+            self.future_movements = []
             self.__end_turn()
             return True
         else:
