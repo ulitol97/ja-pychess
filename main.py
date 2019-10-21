@@ -22,6 +22,37 @@ def ask_player_side():
         return board.BLACK
 
 
+def parse_and_run_command(player_command):
+    """Execute a command given the user input in the interpreter.
+    Evaluate the command and tell the interpreter whether if it was valid or not"""
+    invalid_command = True
+    print_board = False
+
+    command_keywords = player_command.split()
+    if command_prefix + command_keywords[0] in [action.strip() for action in dir(game_board) if
+                                                action.startswith("action")]:
+        # Existing command, try to run it
+        try:
+            if len(command_keywords) == 1:
+                print_board = getattr(game_board, command_prefix + player_command)()
+            else:
+                print_board = getattr(game_board, command_prefix + command_keywords[0])(player_command)
+            invalid_command = False
+        except SystemExit: # Allow system to exit, catch all other exceptions
+            raise
+        except:
+            print("There was a problem executing your instruction. Type 'help' to see available commands.")
+            invalid_command = True
+        finally:
+            print()
+    else:
+        # Invalid command, try again
+        print("Please introduce a valid command. Check more information by typing 'help'.")
+
+    # Return a tuple with the values the interpreter needs to know what to do
+    return invalid_command, print_board
+
+
 def run_game(game_board):
     """Start the infinite interpreter loop"""
     print("Turn of " + Fore.BLUE + "white" + Fore.RESET)
@@ -33,34 +64,24 @@ def run_game(game_board):
         print_board = True
 
         while invalid_command is True:
-            player_command = input(">> Run a command or type 'help' for information:\n").lower()
-            command_keywords = player_command.split()
-            print(command_keywords)
-            if command_prefix+command_keywords[0] in [action.strip() for action in dir(game_board) if action.startswith("action")]:
-                # Existing command, try to run it
-                # try:
-
-                    if len(command_keywords) == 1:
-                        print_board = getattr(game_board, command_prefix+player_command)()
-                    else:
-                        print_board = getattr(game_board, command_prefix + command_keywords[0])(player_command)
-                    invalid_command = False
-                # except:
-                #     print ("There was a problem executing your instruction")
-                #     invalid_command = True
-                #     invalid_command = False
-                # finally:
-                #     print()
-            else:
-                # Invalid command, try again
-                print("Please introduce a valid command. Check more information by typing 'help'.")
+            player_command = input(">> Run a command or type 'help' for information: ").lower()
+            results = parse_and_run_command (player_command)
+            invalid_command = results[0]
+            print_board = results[1]
+            if isinstance(print_board, list):
+                # Special case when we are executing code from a file. Run each command.
+                for command in print_board:
+                    print ("\t --> {}...".format(command))
+                    parse_and_run_command(command)
+                print ("FINISHED EXECUTING FILE COMMANDS:\n")
+                print (game_board)
 
         if print_board is True:
             if game_board.turn == board.WHITE:
                 print("Turn of " + Fore.BLUE + "white" + Fore.RESET)
             else:
                 print("Turn of " + Fore.RED + "black" + Fore.RESET)
-            print (game_board)
+            print(game_board)
         # Input command
 
 

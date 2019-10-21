@@ -50,15 +50,17 @@ class Board:
 
     def action_help(self):
         """Show game help"""
-        print ("The available commands are the following:")
+        print("The available commands are the following:")
         for command in [action.strip() for action in dir(self) if action.startswith("action")]:
-            print("{0} --> {1}".format(command.lstrip("action_"), getattr(self, command).__doc__))
+            command_name = command.lstrip("action_")
+            while len(command_name) < 8:  # Print nicely
+                command_name += " "
+            print("{0} --> {1}".format(command_name, getattr(self, command).__doc__))
         return False
 
-
-    @staticmethod
-    def action_reset():
+    def action_reset(self):
         """Restart the state of the board to start a new game from zero"""
+        self.turn = WHITE
         print("\nResetting game...\n")
         Board.__init_board()
         return True  # Returning true means the interpreter must re-print the board after executing the command
@@ -82,7 +84,7 @@ class Board:
         else:
             # Command correctly formulated
             origin_coord_y = int(LETTERS[split_input[1][0:1]]) - 1  # Get letter coordinate
-            origin_coord_x = Board.BOARD_SIZE - (int(split_input[1][1:])) # Get number
+            origin_coord_x = Board.BOARD_SIZE - (int(split_input[1][1:]))  # Get number
 
             dest_coord_y = int(LETTERS[split_input[2][0:1]]) - 1  # Get letter coordinate
             dest_coord_x = Board.BOARD_SIZE - (int(split_input[2][1:]))  # Get number
@@ -93,8 +95,8 @@ class Board:
     def action_status(self):
         """Show the amount of pieces each color has on the board"""
         game_pieces = []
-        for i in range (Board.BOARD_SIZE):
-            for j in range (Board.BOARD_SIZE):
+        for i in range(Board.BOARD_SIZE):
+            for j in range(Board.BOARD_SIZE):
                 if Board.get_piece(Coordinate(i, j)):
                     game_pieces.append(Board.get_piece(Coordinate(i, j)))
 
@@ -106,7 +108,7 @@ class Board:
         else:
             turn_info = Fore.RED + "Black" + Fore.RESET + "\n"
 
-        print ("\n CURRENT TURN: {}".format(turn_info))
+        print("\n CURRENT TURN: {}".format(turn_info))
 
         print("\n MATCH STATUS:\n")
         print("\t--> " + Fore.BLUE + "White: " + Fore.RESET + "{0} pieces alive, {1} death.".format(
@@ -116,20 +118,25 @@ class Board:
             len([piece for piece in black_pieces if piece.active is True]),
             len([piece for piece in black_pieces if piece.active is False])))
 
-        print ("\n MATCH BOARD:\n")
-        print (self)
+        print("\n MATCH BOARD:\n")
+        print(self)
 
         return False
 
     def action_undo(self):
         """Rewind the match to the moment before you did your previous move"""
-        if len(self.movements) < 2:
+        if len(self.movements) == 0:
             print("Can't undo moves if no moves have been made")
             return False
+        elif len(self.movements) == 1:
+            # Undo one, first turn
+            self.movements.pop().undo()
+            return True
         else:
             # Undo twice, my turn and enemy turn
             self.movements.pop().undo()
             self.movements.pop().undo()
+            print("Undone self and enemy turns")
             return True
         pass
 
@@ -137,15 +144,16 @@ class Board:
     def action_exec(input_file):
         """Run all the commands stored in the file specified as input (as long as they are valid).
         Example: exec path-to-file"""
-        filepath = Path(input_file)
+        filepath = Path(input_file.split()[1].strip())
         if not filepath.is_file():
-            print("Could not find the specific file")
+            print("Could not find the input file, did you introduce its path correctly?")
             return False
 
-        with open(input_file) as file:
+        with open(filepath) as file:
             commands = file.readlines()
 
         commands = [x.strip() for x in commands]
+        print("FOUND INPUT FILE, EXECUTING CONTENTS:")
         return commands
 
     # -------------------------------------------------------------------------------------
@@ -209,6 +217,7 @@ class Board:
         """Change player turn after checking for checkmate or stalemate"""
         self.__check_check()
         self.turn = not self.turn  # Reverse turns
+        
 
     def __check_check(self):
         """Check if, after doing a move, the rival is in check ("jaque")"""
