@@ -1,5 +1,6 @@
 import re
 import string
+import sys
 from pathlib import Path
 from board.tile import Tile
 import pieces
@@ -43,18 +44,31 @@ class Board:
 
     # All actions triggered by user commands ----------------------------------------------
     @staticmethod
+    def action_quit():
+        """Exit the game"""
+        sys.exit(0)
+
+    def action_help(self):
+        """Show game help"""
+        print ("The available commands are the following:")
+        for command in [action.strip() for action in dir(self) if action.startswith("action")]:
+            print("{0} --> {1}".format(command.lstrip("action_"), getattr(self, command).__doc__))
+        return False
+
+
+    @staticmethod
     def action_reset():
-        """Restart the state of the board to start a new game from zero """
+        """Restart the state of the board to start a new game from zero"""
         print("\nResetting game...\n")
         Board.__init_board()
         return True  # Returning true means the interpreter must re-print the board after executing the command
 
-    def action_move(self, input):
+    def action_move(self, user_input):
         """Move a chess piece of the board if it exists and if it is of your color.
-        Format: move <<origin>> <<destiny>>. Example: move a2 a3."""
+        Format: move <<origin>> <<destiny>>. Example: move a2 a3"""
         # First parse input
-        split_input = input.split()
-        if len(split_input != 3):
+        split_input = user_input.split()
+        if len(split_input) != 3:
             print("The command has been invoked incorrectly.\nSyntax is: move <<origin>> <<destination>>."
                   "Run like: 'move a2 a3'")
             return False
@@ -67,36 +81,43 @@ class Board:
             return False
         else:
             # Command correctly formulated
-            origin_coord_y = LETTERS[split_input[1][1:]] - 1  # Get letter coordinate
-            origin_coord_x = Board.BOARD_SIZE - (int(split_input[1][:-1])) # Get number
+            origin_coord_y = int(LETTERS[split_input[1][0:1]]) - 1  # Get letter coordinate
+            origin_coord_x = Board.BOARD_SIZE - (int(split_input[1][1:])) # Get number
 
-            dest_coord_y = LETTERS[split_input[2][1:]] - 1  # Get letter coordinate
-            dest_coord_x = Board.BOARD_SIZE - (int(split_input[2][:-1]))  # Get number
+            dest_coord_y = int(LETTERS[split_input[2][0:1]]) - 1  # Get letter coordinate
+            dest_coord_x = Board.BOARD_SIZE - (int(split_input[2][1:]))  # Get number
 
-            self.move_piece(Coordinate(origin_coord_x, origin_coord_y), Coordinate(dest_coord_x, dest_coord_y))
-            return True
+            moved = self.move_piece(Coordinate(origin_coord_x, origin_coord_y), Coordinate(dest_coord_x, dest_coord_y))
+            return moved
 
-
-
-    @staticmethod
-    def action_status():
-        """Show the amount of pieces each color has on the board."""
+    def action_status(self):
+        """Show the amount of pieces each color has on the board"""
         game_pieces = []
         for i in range (Board.BOARD_SIZE):
             for j in range (Board.BOARD_SIZE):
                 if Board.get_piece(Coordinate(i, j)):
-                    pieces.append(Board.get_piece(Coordinate(i, j)))
+                    game_pieces.append(Board.get_piece(Coordinate(i, j)))
 
         white_pieces = [piece for piece in game_pieces if piece.color == WHITE]
         black_pieces = [piece for piece in game_pieces if piece.color == BLACK]
 
-        print ("\n MATCH STATUS:\n")
-        print("\t-->" + Fore.BLUE + "White side: " + Fore.RESET + "{0} pieces alive, {1} death.".format(
+        if self.turn == WHITE:
+            turn_info = Fore.BLUE + "White" + Fore.RESET + "\n"
+        else:
+            turn_info = Fore.RED + "Black" + Fore.RESET + "\n"
+
+        print ("\n CURRENT TURN: {}".format(turn_info))
+
+        print("\n MATCH STATUS:\n")
+        print("\t--> " + Fore.BLUE + "White: " + Fore.RESET + "{0} pieces alive, {1} death.".format(
             len([piece for piece in white_pieces if piece.active is True]),
             len([piece for piece in white_pieces if piece.active is False])))
-        print("\t-->" + Fore.RED + "Black side: " + Fore.RESET + "{0} pieces alive, {1} death.".format(
+        print("\t--> " + Fore.RED + "Black: " + Fore.RESET + "{0} pieces alive, {1} death.".format(
             len([piece for piece in black_pieces if piece.active is True]),
             len([piece for piece in black_pieces if piece.active is False])))
+
+        print ("\n MATCH BOARD:\n")
+        print (self)
 
         return False
 
@@ -162,15 +183,17 @@ class Board:
 
     def move_piece(self, origin, destination):
         piece = Board.get_piece(origin)
-        if piece is None or piece.color != self.turn:  # Return no piece or enemy piece was chose
+        if piece is None:  # Return no piece or enemy piece was chose
+            print("Can not move piece that does not exist in the selected location")
             return False
+        if piece.color != self.turn:
+            print("Can not move a piece that does not belong to you!")
+            return False
+
         # Get all possible moves of the piece and filter those that move to an empty or enemy occupied tile
         legal_moves = piece.get_legal_moves()
         possible_moves = [move for move in legal_moves
                           if Board.get_piece(move) is None or Board.get_piece(move).color != piece.color]
-
-        for move in possible_moves:
-            print(move)
 
         if destination in possible_moves:  # Execute the movement and store in case the user wants to UNDO it
             movement_command = MovementCommand(piece, origin, destination)
@@ -179,12 +202,13 @@ class Board:
             self.__end_turn()
             return True
         else:
+            print("A piece was selected, but the input destination was not right")
             return False
 
     def __end_turn(self):
         """Change player turn after checking for checkmate or stalemate"""
         self.__check_check()
-        # self.turn = not self.turn  # Reverse turns
+        self.turn = not self.turn  # Reverse turns
 
     def __check_check(self):
         """Check if, after doing a move, the rival is in check ("jaque")"""
