@@ -6,7 +6,10 @@
       <change beforePath="$PROJECT_DIR$/board/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/board/board.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/board/tile.py" beforeDir="false" afterPath="$PROJECT_DIR$/board/tile.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movement/movement_command.py" beforeDir="false" afterPath="$PROJECT_DIR$/movement/movement_command.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movement/coordinate.py" beforeDir="false" afterPath="$PROJECT_DIR$/movement/coordinate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pieces/bishop.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/bishop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pieces/pawn.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/pawn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pieces/rook.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/rook.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -140,7 +143,7 @@
       <workItem from="1571571700305" duration="75000" />
       <workItem from="1571584081967" duration="33560000" />
       <workItem from="1571623065277" duration="51000" />
-      <workItem from="1571648043975" duration="5155000" />
+      <workItem from="1571648043975" duration="6841000" />
     </task>
     <servers />
   </component>

@@ -21,10 +21,11 @@ class Pawn(Piece):
             return legal_moves
 
         # Determine pawns moving direction
+        mov_y: int
         if self.color == board.WHITE:
-            mov_y: int = -1
+            mov_y = -1
         else:
-            mov_y: int = 1
+            mov_y = 1
 
         # Determine legal coordinate destinations
         if Pawn.is_valid_move(

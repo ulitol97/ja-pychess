@@ -29,7 +29,7 @@ def parse_and_run_command(player_command: str) -> Tuple[bool, Union[bool, List[s
     """Execute a command given the user input in the interpreter.
     Evaluate the command and tell the interpreter whether if it was valid or not"""
     invalid_command: bool = True
-    print_board: bool = False
+    print_board: Union[bool, List[str]] = False
 
     command_keywords: List[str] = player_command.split()
     if command_prefix + command_keywords[0] in [action.strip() for action in dir(game_board) if
@@ -37,9 +37,9 @@ def parse_and_run_command(player_command: str) -> Tuple[bool, Union[bool, List[s
         # Existing command, try to run it
         try:
             if len(command_keywords) == 1:  # Command with no arguments
-                print_board: bool = getattr(game_board, command_prefix + player_command)()
+                print_board = getattr(game_board, command_prefix + player_command)()
             else:  # Command with arguments
-                print_board: Union[bool, List[str]] = getattr(game_board, command_prefix + command_keywords[0])(player_command)
+                print_board = getattr(game_board, command_prefix + command_keywords[0])(player_command)
             invalid_command = False
         except SystemExit:  # Allow system to exit, catch all other exceptions
             raise

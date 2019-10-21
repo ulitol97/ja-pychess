@@ -46,7 +46,7 @@ class Bishop(Piece):
 
         # As long as there are no pieces in its path, allow move
         while i >= 0 and j < board.Board.BOARD_SIZE:
-            piece: Piece = board.Board.get_piece(Coordinate(i, j))
+            piece = board.Board.get_piece(Coordinate(i, j))
             if piece is None:
                 legal_moves.append(Coordinate(i, j))
                 i -= 1
@@ -64,7 +64,7 @@ class Bishop(Piece):
 
         # As long as there are no pieces in its path, allow move
         while i < board.Board.BOARD_SIZE and j >= 0:
-            piece: Piece = board.Board.get_piece(Coordinate(i, j))
+            piece = board.Board.get_piece(Coordinate(i, j))
             if piece is None:
                 legal_moves.append(Coordinate(i, j))
                 i += 1
@@ -82,7 +82,7 @@ class Bishop(Piece):
 
         # As long as there are no pieces in its path, allow move
         while i >= 0 and j >= 0:
-            piece: Piece = board.Board.get_piece(Coordinate(i, j))
+            piece = board.Board.get_piece(Coordinate(i, j))
             if piece is None:
                 legal_moves.append(Coordinate(i, j))
                 i -= 1

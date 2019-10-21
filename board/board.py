@@ -164,10 +164,11 @@ class Board:
         white_pieces: List[Piece] = [piece for piece in game_pieces if piece.color == WHITE]
         black_pieces: List[Piece] = [piece for piece in game_pieces if piece.color == BLACK]
 
+        turn_info: str = ""
         if self.turn == WHITE:
-            turn_info: str = Fore.BLUE + "White" + Fore.RESET + "\n"
+            turn_info += Fore.BLUE + "White" + Fore.RESET + "\n"
         else:
-            turn_info: str = Fore.RED + "Black" + Fore.RESET + "\n"
+            turn_info += Fore.RED + "Black" + Fore.RESET + "\n"
 
         # Print the info nicely to the user
         print("\n CURRENT TURN: {}".format(turn_info))
@@ -297,12 +298,13 @@ class Board:
     def __check_checkmate(self, player_movements: List[Coordinate]):
         """Check if, after doing a move, the rival is in checkmate ("jaque mate")"""
         checkmate: bool = True
+        king_movements: List[Coordinate] = []
         if self.turn == WHITE:
-            king_movements: List[Coordinate] = self.black_king.get_legal_moves()
+            king_movements = self.black_king.get_legal_moves()
             king_movements = [move for move in king_movements
                               if Board.get_piece(move) is None or Board.get_piece(move).color != BLACK]
         else:
-            king_movements: List[Coordinate] = self.white_king.get_legal_moves()
+            king_movements = self.white_king.get_legal_moves()
             king_movements = [move for move in king_movements
                               if Board.get_piece(move) is None or Board.get_piece(move).color != WHITE]
 
