@@ -9,7 +9,7 @@ import pieces
 from movement import Coordinate
 from movement.movement_command import MovementCommand
 from colorama import Back, Fore
-from pieces import  Piece
+from pieces import Piece
 
 
 # Program constants for each side of the board
@@ -55,7 +55,7 @@ class Board:
             tiles.append(row)
 
         Board.tiles = tiles
-        Board.__place_trap_tiles()
+        Board.__place_traps()
         Board.__place_pieces()
         return tiles
 
@@ -89,7 +89,7 @@ class Board:
             Board.tiles[1][j].piece.position = Coordinate(1, j)
 
     @staticmethod
-    def __place_trap_tiles() -> None:
+    def __place_traps() -> None:
         """Place two trap tiles in random location in the middle of the board. Falling in a trap
         will demote the fallen piece to a Pawn"""
         trap1_y: int = random.randint(0, Board.BOARD_SIZE - 1)

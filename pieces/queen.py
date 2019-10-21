@@ -6,8 +6,8 @@ from pieces import Rook, Bishop
 
 class Queen(Rook, Bishop):
     """The Queen represents a chess piece capable of diagonal, horizontal and vertical movement."""
-    representation: str = "Q"
-    value: int = 9
+    REPRESENTATION: str = "Q"
+    VALUE: int = 9
 
     def __init__(self, color: bool) -> None:
         super().__init__(color)

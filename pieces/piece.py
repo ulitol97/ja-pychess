@@ -8,8 +8,8 @@ from colorama import Fore
 
 class Piece(ABC):
     """The Piece class is an abstract class serving as a template for all the chess pieces."""
-    representation: str = "X"  # Letter representing the piece
-    value: int = 0  # "Value" of the piece for future AI bases on a heusristc
+    REPRESENTATION: str = "X"  # Letter representing the piece
+    VALUE: int = 0  # "Value" of the piece for future AI bases on a heusristc
 
     def __init__(self, color: bool = None, x: int = None, y: int = None) -> None:
         """Initialize the chess piece with a given position and color"""
@@ -23,11 +23,11 @@ class Piece(ABC):
     def __str__(self) -> str:
         """Return a letter representing the piece colored to represent its side"""
         if self.color == board.WHITE:
-            return Fore.BLUE + self.representation + Fore.RESET
+            return Fore.BLUE + self.REPRESENTATION + Fore.RESET
         elif self.color == board.BLACK:
-            return Fore.RED + self.representation + Fore.RESET
+            return Fore.RED + self.REPRESENTATION + Fore.RESET
         else:
-            return self.representation
+            return self.REPRESENTATION
 
     def get_legal_moves(self) -> List[Coordinate]:
         """Return a list of all the movements the piece can do without leaving the board"""

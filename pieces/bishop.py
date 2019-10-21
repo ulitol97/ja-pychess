@@ -7,8 +7,8 @@ from pieces.piece import Piece
 
 class Bishop(Piece):
     """The Bishop represents a chess piece capable of diagonal movement."""
-    representation: str = "B"
-    value: int = 3
+    REPRESENTATION: str = "B"
+    VALUE: int = 3
 
     def __init__(self, color: bool) -> None:
         super().__init__(color)

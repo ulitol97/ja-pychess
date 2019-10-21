@@ -7,8 +7,8 @@ from pieces.piece import Piece
 
 class Rook(Piece):
     """The Rook represents a chess piece capable of horizontal and vertical movement."""
-    representation = "R"
-    value: int = 5
+    REPRESENTATION = "R"
+    VALUE: int = 5
 
     def __init__(self, color: bool) -> None:
         super().__init__(color)

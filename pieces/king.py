@@ -6,8 +6,8 @@ from pieces.piece import Piece
 
 class King(Piece):
     """The King represents a chess piece capable of any movement of length one that the team depends on."""
-    representation: str = "K"
-    value:int = 25
+    REPRESENTATION: str = "K"
+    VALUE: int = 25
 
     def __init__(self, color: bool) -> None:
         super().__init__(color)

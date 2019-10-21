@@ -49,11 +49,11 @@ class MovementCommand:
         if board.Board.tiles[self.destination.x][self.destination.y].trap is True:
             if undo is True:
                 self.piece.__class__ = self.originalClass  # Revert falling in trap
-                self.piece.representation = self.originalClass.representation
+                self.piece.REPRESENTATION = self.originalClass.REPRESENTATION
             else:
                 print (Fore.YELLOW + self.piece.__class__.__name__ + " fell into a trap: demoted to a Pawn" + Fore.RESET)
                 self.piece.__class__ = Pawn  # Falling into a trap causes change to pawn
-                self.piece.representation = Pawn.representation
+                self.piece.REPRESENTATION = Pawn.REPRESENTATION
 
     def check_for_pawn_promotion(self, undo: bool = False):
         """Promote pawns to queen when reaching the end of the enemy field"""
@@ -62,8 +62,8 @@ class MovementCommand:
                     self.piece.color == board.BLACK and self.destination.x == board.Board.BOARD_SIZE - 1):
                 if undo is True:
                     self.piece.__class__ = Pawn  # Falling into a trap causes change to pawn
-                    self.piece.representation = Pawn.representation
+                    self.piece.REPRESENTATION = Pawn.REPRESENTATION
                 else:
                     print(Fore.YELLOW + "Congrats, your Pawn was promoted to Queen" + Fore.RESET)
                     self.piece.__class__ = Queen  # Falling into a trap causes change to pawn
-                    self.piece.representation = Queen.representation
+                    self.piece.REPRESENTATION = Queen.REPRESENTATION

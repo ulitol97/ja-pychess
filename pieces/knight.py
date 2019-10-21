@@ -6,8 +6,8 @@ from pieces.piece import Piece
 
 class Knight(Piece):
     """The Knight represents a chess piece capable of L shaped movement."""
-    representation: str = "N"
-    value: int = 3
+    REPRESENTATION: str = "N"
+    VALUE: int = 3
 
     def __init__(self, color: bool) -> None:
         super().__init__(color)

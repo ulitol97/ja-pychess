@@ -1,3 +1,4 @@
-move a2 a3sd
 move a2 a3
-help
+undo
+redo
+status

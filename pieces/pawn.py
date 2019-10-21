@@ -7,8 +7,8 @@ from pieces.piece import Piece
 
 class Pawn(Piece):
     """The Pawn represents a chess piece capable of forward movement and attacking other pieces diagonally."""
-    representation: str = "P"
-    value: int = 1
+    REPRESENTATION: str = "P"
+    VALUE: int = 1
 
     def __init__(self, color: bool) -> None:
         super().__init__(color)
