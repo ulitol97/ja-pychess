@@ -3,8 +3,7 @@ import re
 import string
 import sys
 from pathlib import Path
-from re import Pattern
-from typing import Dict, List, Union
+from typing import Dict, List, Union, Pattern
 from board.tile import Tile
 import pieces
 from movement import Coordinate
@@ -196,7 +195,7 @@ class Board:
             prev_move: MovementCommand = self.previous_movements.pop()
             self.future_movements.append(prev_move)
             prev_move.undo()
-            print("Undone last turns")
+            print("Last turn undone")
             self.turn = not self.turn
             return True
 
@@ -210,10 +209,9 @@ class Board:
             future_move: MovementCommand = self.future_movements.pop()
             self.previous_movements.append(future_move)
             future_move.execute()
-            print("Undone last turns")
+            print("Last turn redone")
             self.turn = not self.turn
             return True
-        pass
 
     @staticmethod
     def action_exec(input_file) -> Union[bool, List[str]]:
@@ -271,10 +269,10 @@ class Board:
 
     def __end_turn(self) -> None:
         """Change player turn after checking for check and checkmate"""
-        self.__check_check()
+        self.check_check()
         self.turn = not self.turn  # Reverse turns
 
-    def __check_check(self) -> None:
+    def check_check(self) -> bool:
         """Check if, after doing a move, the rival is in check ("jaque")"""
         player_next_moves: List[Coordinate] = []
         for i in range(Board.BOARD_SIZE):
@@ -290,13 +288,16 @@ class Board:
         if self.turn == WHITE:
             if self.black_king.position in player_next_moves:
                 print("The " + Fore.RED + "black king" + Fore.RESET + " is in check!")
-                self.__check_checkmate(player_next_moves)
+                self.check_checkmate(player_next_moves)
+                return True
         else:
             if self.white_king.position in player_next_moves:
                 print("The " + Fore.BLUE + "white king" + Fore.BLUE + " is in check!")
-                self.__check_checkmate(player_next_moves)
+                self.check_checkmate(player_next_moves)
+                return True
+        return False
 
-    def __check_checkmate(self, player_movements: List[Coordinate]):
+    def check_checkmate(self, player_movements: List[Coordinate]) -> bool:
         """Check if, after doing a move, the rival is in checkmate ("jaque mate")"""
         checkmate: bool = True
         king_movements: List[Coordinate] = []
@@ -323,6 +324,7 @@ class Board:
 
             #  Reset game
             Board.action_reset(self)
+        return checkmate
 
     # -------------------------------------------------------------------------------------
 

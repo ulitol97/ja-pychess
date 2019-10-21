@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="293b1fef-0cab-439c-8e11-c86f7a8c3f70" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/piece_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/board_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/board/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/board/board.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/bishop.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/bishop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/knight.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/knight.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/pawn.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/pawn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/rook.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/rook.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/piece_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/piece_test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,10 +28,13 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Ejercicios-POO/Flask Exercises" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/test" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Eduardo\Documents\Uni\2 - Master\1o\Programacion Orientada a Objetos\Practica_Python\test" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Eduardo\Documents\Uni\2 - Master\1o\Programacion Orientada a Objetos\Practica_Python\board" />
     </key>
@@ -53,7 +51,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.Unittests for piece_test.TestUM">
+  <component name="RunManager" selected="Python tests.Unittests for board_test.TestUM">
     <configuration name="board" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Practica_Python" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -120,6 +118,21 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Unittests for board_test.TestUM" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="Practica_Python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;board_test.TestUM&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="Unittests for piece_test.TestUM" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="Practica_Python" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -137,6 +150,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Unittests for board_test.TestUM" />
         <item itemvalue="Python tests.Unittests for piece_test.TestUM" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.king" />
@@ -160,7 +174,7 @@
       <workItem from="1571571700305" duration="75000" />
       <workItem from="1571584081967" duration="33560000" />
       <workItem from="1571623065277" duration="51000" />
-      <workItem from="1571648043975" duration="10953000" />
+      <workItem from="1571648043975" duration="13521000" />
     </task>
     <servers />
   </component>
@@ -199,6 +213,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Practica_Python$Unittests_for_board_test_TestUM.coverage" NAME="Unittests for board_test.TestUM Coverage Results" MODIFIED="1571664908206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/Practica_Python$main.coverage" NAME="main Coverage Results" MODIFIED="1571656488445" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Practica_Python$Unittests_for_piece_test_TestUM.coverage" NAME="Unittests for piece_test.TestUM Coverage Results" MODIFIED="1571660068256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/Practica_Python$board.coverage" NAME="board Coverage Results" MODIFIED="1571617783076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/board" />

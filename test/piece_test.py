@@ -21,7 +21,7 @@ class TestUM(unittest.TestCase):
         self.assertRaises(TypeError, Piece())
 
     def test_piece_constructor(self):
-        """Initialize any piece and check the attribute names have been stored correctly"""
+        """Initialize any piece and check the all inner data has been stored correctly"""
         pawn: Pawn = Pawn(board.WHITE)
         self.assertEqual(pawn.color, board.WHITE)
         self.assertTrue(pawn.position.x is None)
