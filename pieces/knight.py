@@ -3,6 +3,9 @@ from pieces.piece import Piece
 
 
 class Knight(Piece):
+    representation = "N"
+    value = 3
+
     def __init__(self, color):
         super().__init__(color)
         self.representation = "N"

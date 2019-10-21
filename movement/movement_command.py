@@ -1,4 +1,6 @@
 from board import board
+from pieces import Pawn
+from colorama import Fore
 
 
 class MovementCommand:
@@ -8,6 +10,7 @@ class MovementCommand:
         self.origin = origin  # Original coordinates of the movement
         self.destination = destination  # Destination coordinates of the movement
         self.destinationPiece = board.Board.get_piece(self.destination)
+        self.originalClass = self.piece.__class__ # In order to recover from falls in trap tiles
 
     def execute(self):
         if self.destinationPiece is not None:
@@ -16,6 +19,10 @@ class MovementCommand:
         board.Board.tiles[self.origin.x][self.origin.y].piece = None
         self.piece.position = self.destination
         self.piece.has_moved = True
+        if board.Board.tiles[self.destination.x][self.destination.y].trap is True:
+            print ("Fell into a "+ Fore.YELLOW + "trap" + Fore.RESET + "! Turned into a pawn")
+            self.piece.__class__ = Pawn  # Falling into a trap causes change to pawn
+            self.piece.representation = Pawn.representation
 
     def undo(self):
         board.Board.tiles[self.origin.x][self.origin.y].piece = self.piece
@@ -24,4 +31,9 @@ class MovementCommand:
         board.Board.tiles[self.destination.x][self.destination.y].piece = self.destinationPiece
         if self.destinationPiece is not None:
             self.destinationPiece.active = True  # Revive the piece in the destination
+
+        if board.Board.tiles[self.destination.x][self.destination.y].trap is True:
+            self.piece.__class__ = self.originalClass  # Revert falling in trap
+            self.piece.representation = self.originalClass.representation
+
 

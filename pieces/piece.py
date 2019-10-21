@@ -5,12 +5,13 @@ from colorama import Fore
 
 
 class Piece(ABC):
+    representation = "X"
+    value = 0
+
     def __init__(self, color=None, x=None, y=None):
         self.position = Coordinate(x, y)
         self.has_moved = False
         self.active = True
-        self.value = 0
-        self.representation = "X"
         self.color = color
         if color is None:
             self.color = board.WHITE

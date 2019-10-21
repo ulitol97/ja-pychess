@@ -3,10 +3,11 @@ from pieces.piece import Piece
 
 
 class King(Piece):
+    representation = "K"
+    value = 25
+
     def __init__(self, color):
         super().__init__(color)
-        self.representation = "K"
-        self.value = 25
 
     def get_legal_moves(self):
         """Define King legal moves. Move one tile in any direction"""

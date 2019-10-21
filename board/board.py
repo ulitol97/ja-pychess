@@ -1,3 +1,4 @@
+import random
 import re
 import string
 import sys
@@ -39,6 +40,7 @@ class Board:
             tiles.append(row)
 
         Board.tiles = tiles
+        Board.__place_trap_tiles()
         Board.__place_pieces()
         return tiles
 
@@ -128,15 +130,11 @@ class Board:
         if len(self.movements) == 0:
             print("Can't undo moves if no moves have been made")
             return False
-        elif len(self.movements) == 1:
-            # Undo one, first turn
-            self.movements.pop().undo()
-            return True
         else:
-            # Undo twice, my turn and enemy turn
+            # Undo last turn
             self.movements.pop().undo()
-            self.movements.pop().undo()
-            print("Undone self and enemy turns")
+            print("Undone last turns")
+            self.turn = not self.turn
             return True
         pass
 
@@ -186,6 +184,15 @@ class Board:
             Board.tiles[1][j].piece.position = Coordinate(1, j)
 
     @staticmethod
+    def __place_trap_tiles():
+        trap1_y = random.randint(0, Board.BOARD_SIZE-1)
+        trap2_y = random.randint(0, Board.BOARD_SIZE-1)
+
+        Board.tiles[Board.BOARD_SIZE//2 - 1][trap1_y].trap = True
+        Board.tiles[Board.BOARD_SIZE//2][trap2_y].trap = True
+
+
+    @staticmethod
     def get_piece(coordinate):
         return Board.tiles[coordinate.x][coordinate.y].piece
 
@@ -217,7 +224,6 @@ class Board:
         """Change player turn after checking for checkmate or stalemate"""
         self.__check_check()
         self.turn = not self.turn  # Reverse turns
-        
 
     def __check_check(self):
         """Check if, after doing a move, the rival is in check ("jaque")"""
@@ -265,7 +271,7 @@ class Board:
                 print(Fore.RED + "Black side wins!" + Fore.RESET)
 
             #  Reset game
-            Board.action_reset()
+            Board.action_reset(self)
 
     def __str__(self):
         """Returns a human readable representation of the chess board"""
@@ -276,17 +282,15 @@ class Board:
             row_number = str(self.BOARD_SIZE - i)
             board += row_number + "  "
             for j in range(self.BOARD_SIZE):
-                if i % 2 != 0 and j % 2 == 0 or i % 2 == 0 and j % 2 != 0:
-                    board += Back.LIGHTBLACK_EX
+                if Board.tiles[i][j].trap is True:
+                    board += Back.LIGHTYELLOW_EX
                 else:
-                    board += Back.LIGHTWHITE_EX
+                    if i % 2 != 0 and j % 2 == 0 or i % 2 == 0 and j % 2 != 0:
+                        board += Back.LIGHTBLACK_EX
+                    else:
+                        board += Back.LIGHTWHITE_EX
 
-                piece = Board.get_piece(Coordinate(i, j))
-                if piece is not None and piece.active is True:
-                    board += " {} ".format(piece)
-                else:
-                    board += "   "
-
+                board += " {} ".format(self.tiles[i][j])
                 board += Back.RESET
             board += ("  " + row_number + "\n")
         return column_letters + "\n" + board + column_letters
