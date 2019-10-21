@@ -1,5 +1,6 @@
 from board import board
-from pieces import Pawn, Queen
+from movement import Coordinate
+from pieces import Pawn, Queen, Piece
 from colorama import Fore
 
 
@@ -12,13 +13,13 @@ class MovementCommand:
         -> Execute movements
         -> Undo movements
     """
-    def __init__(self, piece, origin, destination):
+    def __init__(self, piece: Piece, origin: Coordinate, destination: Coordinate):
         """Initialize a movement command and store the necessary data to be able to undo it later"""
-        self.piece = piece  # Piece affected by the movement
-        self.hasMovedValue = self.piece.has_moved
-        self.origin = origin  # Original coordinates of the movement
-        self.destination = destination  # Destination coordinates of the movement
-        self.destinationPiece = board.Board.get_piece(self.destination)
+        self.piece: Piece = piece  # Piece affected by the movement
+        self.hasMovedValue: bool = self.piece.has_moved
+        self.origin: Coordinate = origin  # Original coordinates of the movement
+        self.destination: Coordinate = destination  # Destination coordinates of the movement
+        self.destinationPiece: Piece = board.Board.get_piece(self.destination)
         self.originalClass = self.piece.__class__  # In order to recover from falls in trap tiles
 
     def execute(self):
@@ -43,7 +44,7 @@ class MovementCommand:
         self.check_for_traps(True)
         self.check_for_pawn_promotion(True)
 
-    def check_for_traps(self, undo=False):
+    def check_for_traps(self, undo:bool = False):
         """Check if the movement destination is a trap tile and activate it if it is"""
         if board.Board.tiles[self.destination.x][self.destination.y].trap is True:
             if undo is True:
@@ -54,7 +55,7 @@ class MovementCommand:
                 self.piece.__class__ = Pawn  # Falling into a trap causes change to pawn
                 self.piece.representation = Pawn.representation
 
-    def check_for_pawn_promotion(self, undo=False):
+    def check_for_pawn_promotion(self, undo: bool = False):
         """Promote pawns to queen when reaching the end of the enemy field"""
         if isinstance(self.piece, Pawn):
             if (self.piece.color == board.WHITE and self.destination.x == 0) or (
