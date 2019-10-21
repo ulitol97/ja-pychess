@@ -30,7 +30,7 @@ class Rook(Piece):
         # Getting maximum movement in X axis
         for i in range (self.position.x+1, board.Board.BOARD_SIZE):
             piece: Piece = board.Board.get_piece(Coordinate(i, self.position.y))
-            if piece is not None:
+            if piece is not None and piece.active is True:
                 if piece.color == self.color:
                     max_x = i-1
                 else:
@@ -40,7 +40,7 @@ class Rook(Piece):
         # Getting minimum movement in X axis
         for i in range(self.position.x - 1, - 1, -1):
             piece = board.Board.get_piece(Coordinate(i, self.position.y))
-            if piece is not None:
+            if piece is not None and piece.active is True:
                 if piece.color == self.color:
                     min_x = i+1
                 else:
@@ -50,7 +50,7 @@ class Rook(Piece):
         # Getting maximum movement in Y axis
         for j in range(self.position.y + 1, board.Board.BOARD_SIZE):
             piece = board.Board.get_piece(Coordinate(self.position.x, j))
-            if piece is not None:
+            if piece is not None and piece.active is True:
                 if piece.color == self.color:
                     max_y = j-1
                 else:
@@ -60,7 +60,7 @@ class Rook(Piece):
         # Getting minimum movement in Y axis
         for j in range(self.position.y - 1, - 1, -1):
             piece = board.Board.get_piece(Coordinate(self.position.x, j))
-            if piece is not None:
+            if piece is not None and piece.active is True:
                 if piece.color == self.color:
                     min_y = j+1
                 else:

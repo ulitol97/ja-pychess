@@ -254,7 +254,8 @@ class Board:
         # Get all possible moves of the piece and filter those that move to an empty or enemy occupied tile
         legal_moves: List[Coordinate] = piece.get_legal_moves()
         possible_moves: List[Coordinate] = [move for move in legal_moves
-                          if Board.get_piece(move) is None or Board.get_piece(move).color != piece.color]
+                          if Board.get_piece(move) is None or Board.get_piece(move).color != piece.color
+                                            or Board.get_piece(move).active is False]
 
         # Execute the movement and store in case the user wants to UNDO it
         if destination in possible_moves:

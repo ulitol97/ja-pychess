@@ -20,7 +20,6 @@ class Knight(Piece):
             return legal_moves
 
         # Determine legal coordinate destinations
-
         if Knight.is_valid_move(Coordinate(self.position.x + 1, self.position.y + 2)):
             legal_moves.append(Coordinate(self.position.x + 1, self.position.y + 2))
 
