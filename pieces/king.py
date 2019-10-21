@@ -3,6 +3,7 @@ from pieces.piece import Piece
 
 
 class King(Piece):
+    """The King represents a chess piece capable of any movement of length one that the team depends on."""
     representation = "K"
     value = 25
 

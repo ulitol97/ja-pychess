@@ -4,6 +4,7 @@ from pieces.piece import Piece
 
 
 class Rook(Piece):
+    """The Rook represents a chess piece capable of horizontal and vertical movement."""
     representation = "R"
     value = 5
 

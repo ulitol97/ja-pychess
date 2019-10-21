@@ -4,7 +4,7 @@ from pieces.piece import Piece
 
 
 class Pawn(Piece):
-
+    """The Pawn represents a chess piece capable of forward movement and attacking other pieces diagonally."""
     representation = "P"
     value = 1
 

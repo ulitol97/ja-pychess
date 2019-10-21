@@ -12,27 +12,37 @@ from colorama import Back, Fore
 # Program constants for each side of the board
 WHITE = True
 BLACK = False
+#  Table for translation of letter coordinates to numeric coordinates
 LETTERS = {letter: str(index) for index, letter in enumerate(string.ascii_lowercase, start=1)}
 
 
 class Board:
+    """
+    The board takes charge of representing the board in which the game takes places. The board:
+        -> Stores variables that define the game (player side, whose turn it is, etc.
+        -> Stores the state of each tile in the board and the piece occupying it, if any
+    """
     BOARD_SIZE = 8
     tiles = []
 
     def __init__(self, player_side=WHITE):
+        """Initiate a new board, setting up a matrix of tiles, the player side and two stacks
+        storing commands for the user to UNDO/REDO"""
         self.__init_board()
         self.player_side = player_side
-        self.cpu_side = not player_side
+        self.rival_side = not player_side
         self.previous_movements = []  # Stack with previous moves
         self.future_movements = []  # Stack with moves to be redone
-        self.turn = WHITE
+        self.turn = WHITE  # White side has the first turn
         # Keep track of each side king
         self.white_king = Board.get_piece(Coordinate(7, 4))
         self.black_king = Board.get_piece(Coordinate(0, 4))
 
+    # All actions setting up the game board ----------------------------------------------
+
     @staticmethod
     def __init_board():
-        """Initializes the matrix containing all the board tiles"""
+        """Initializes the matrix containing all the board tiles in a distribution BOARD_SIZE x BOARD_SIZE"""
         tiles = []
         for i in range(Board.BOARD_SIZE):
             row = []
@@ -44,6 +54,45 @@ class Board:
         Board.__place_trap_tiles()
         Board.__place_pieces()
         return tiles
+
+    @staticmethod
+    def __place_pieces():
+        """Places the chess pieces in their corresponding tiles"""
+        # Standard black pieces behind the line of pawns
+        black_pieces = [pieces.Rook(BLACK), pieces.Knight(BLACK), pieces.Bishop(BLACK), pieces.Queen(BLACK),
+                        pieces.King(BLACK), pieces.Bishop(BLACK), pieces.Knight(BLACK), pieces.Rook(BLACK)]
+
+        # Standard white pieces behind the line of pawns
+        white_pieces = [pieces.Rook(WHITE), pieces.Knight(WHITE), pieces.Bishop(WHITE), pieces.Queen(WHITE),
+                        pieces.King(WHITE), pieces.Bishop(WHITE), pieces.Knight(WHITE), pieces.Rook(WHITE)]
+
+        # Add special pieces
+        for i in range(len(Board.tiles[Board.BOARD_SIZE - 1])):
+            Board.tiles[Board.BOARD_SIZE - 1][i].piece = white_pieces[i]
+            Board.tiles[Board.BOARD_SIZE - 1][i].piece.position = Coordinate(Board.BOARD_SIZE - 1, i)
+
+            Board.tiles[0][i].piece = black_pieces[i]
+            Board.tiles[0][i].piece.position = Coordinate(0, i)
+
+        # Lines of pawns
+        for j in range(Board.BOARD_SIZE):
+            Board.tiles[Board.BOARD_SIZE - 2][j].piece = pieces.Pawn(WHITE)
+            Board.tiles[Board.BOARD_SIZE - 2][j].piece.position = Coordinate(Board.BOARD_SIZE - 2, j)
+
+            Board.tiles[1][j].piece = pieces.Pawn(BLACK)
+            Board.tiles[1][j].piece.position = Coordinate(1, j)
+
+    @staticmethod
+    def __place_trap_tiles():
+        """Place two trap tiles in random location in the middle of the board. Falling in a trap
+        will demote the fallen piece to a Pawn"""
+        trap1_y = random.randint(0, Board.BOARD_SIZE - 1)
+        trap2_y = random.randint(0, Board.BOARD_SIZE - 1)
+
+        Board.tiles[Board.BOARD_SIZE // 2 - 1][trap1_y].trap = True
+        Board.tiles[Board.BOARD_SIZE // 2][trap2_y].trap = True
+
+    # -------------------------------------------------------------------------------------
 
     # All actions triggered by user commands ----------------------------------------------
     @staticmethod
@@ -85,13 +134,14 @@ class Board:
                   "Run like: 'move a2 a3'")
             return False
         else:
-            # Command correctly formulated
+            # Command correctly formulated, translate the coordinates specified by the user
             origin_coord_y = int(LETTERS[split_input[1][0:1]]) - 1  # Get letter coordinate
             origin_coord_x = Board.BOARD_SIZE - (int(split_input[1][1:]))  # Get number
 
             dest_coord_y = int(LETTERS[split_input[2][0:1]]) - 1  # Get letter coordinate
             dest_coord_x = Board.BOARD_SIZE - (int(split_input[2][1:]))  # Get number
 
+            # Move piece
             moved = self.move_piece(Coordinate(origin_coord_x, origin_coord_y), Coordinate(dest_coord_x, dest_coord_y))
             return moved
 
@@ -103,6 +153,7 @@ class Board:
                 if Board.get_piece(Coordinate(i, j)):
                     game_pieces.append(Board.get_piece(Coordinate(i, j)))
 
+        # Collect each side pieces
         white_pieces = [piece for piece in game_pieces if piece.color == WHITE]
         black_pieces = [piece for piece in game_pieces if piece.color == BLACK]
 
@@ -111,6 +162,7 @@ class Board:
         else:
             turn_info = Fore.RED + "Black" + Fore.RESET + "\n"
 
+        # Print the info nicely to the user
         print("\n CURRENT TURN: {}".format(turn_info))
 
         print("\n MATCH STATUS:\n")
@@ -159,66 +211,35 @@ class Board:
     def action_exec(input_file):
         """Run all the commands stored in the file specified as input (as long as they are valid).
         Example: exec path-to-file"""
+        # Extract the file path form the user input
         filepath = Path(input_file.split()[1].strip())
         if not filepath.is_file():
             print("Could not find the input file, did you introduce its path correctly?")
             return False
-
+        # File found, parse
         with open(filepath) as file:
             commands = file.readlines()
 
         commands = [x.strip() for x in commands]
-        print("FOUND INPUT FILE, EXECUTING CONTENTS:")
+        print("FOUND INPUT FILE, EXECUTING CONTENTS ({0} commands found):".format(len(commands)))
         return commands
 
     # -------------------------------------------------------------------------------------
 
-    @staticmethod
-    def __place_pieces():
-        """Places the contents od the chessboard """
-        # Standard black pieces behind the line of pawns
-        black_pieces = [pieces.Rook(BLACK), pieces.Knight(BLACK), pieces.Bishop(BLACK), pieces.Queen(BLACK),
-                        pieces.King(BLACK), pieces.Bishop(BLACK), pieces.Knight(BLACK), pieces.Rook(BLACK)]
-
-        # Standard white pieces behind the line of pawns
-        white_pieces = [pieces.Rook(WHITE), pieces.Knight(WHITE), pieces.Bishop(WHITE), pieces.Queen(WHITE),
-                        pieces.King(WHITE), pieces.Bishop(WHITE), pieces.Knight(WHITE), pieces.Rook(WHITE)]
-
-        # Add special pieces
-        for i in range(len(Board.tiles[Board.BOARD_SIZE - 1])):
-            Board.tiles[Board.BOARD_SIZE - 1][i].piece = white_pieces[i]
-            Board.tiles[Board.BOARD_SIZE - 1][i].piece.position = Coordinate(Board.BOARD_SIZE - 1, i)
-
-            Board.tiles[0][i].piece = black_pieces[i]
-            Board.tiles[0][i].piece.position = Coordinate(0, i)
-
-        # Lines of pawns
-        for j in range(Board.BOARD_SIZE):
-            Board.tiles[Board.BOARD_SIZE - 2][j].piece = pieces.Pawn(WHITE)
-            Board.tiles[Board.BOARD_SIZE - 2][j].piece.position = Coordinate(Board.BOARD_SIZE - 2, j)
-
-            Board.tiles[1][j].piece = pieces.Pawn(BLACK)
-            Board.tiles[1][j].piece.position = Coordinate(1, j)
-
-    @staticmethod
-    def __place_trap_tiles():
-        trap1_y = random.randint(0, Board.BOARD_SIZE-1)
-        trap2_y = random.randint(0, Board.BOARD_SIZE-1)
-
-        Board.tiles[Board.BOARD_SIZE//2 - 1][trap1_y].trap = True
-        Board.tiles[Board.BOARD_SIZE//2][trap2_y].trap = True
-
+    # Helper methods during the game ----------------------------------------------
 
     @staticmethod
     def get_piece(coordinate):
+        """Given a specific coordinate, return the piece located in that position"""
         return Board.tiles[coordinate.x][coordinate.y].piece
 
     def move_piece(self, origin, destination):
+        """Attempt to move the piece in the origin coordinate to the destination coordinate, if the move is legal"""
         piece = Board.get_piece(origin)
-        if piece is None:  # Return no piece or enemy piece was chose
+        if piece is None:  # Return because no piece was chosen
             print("Can not move piece that does not exist in the selected location")
             return False
-        if piece.color != self.turn:
+        if piece.color != self.turn:  # Return because an enemy piece was chosen
             print("Can not move a piece that does not belong to you!")
             return False
 
@@ -227,7 +248,8 @@ class Board:
         possible_moves = [move for move in legal_moves
                           if Board.get_piece(move) is None or Board.get_piece(move).color != piece.color]
 
-        if destination in possible_moves:  # Execute the movement and store in case the user wants to UNDO it
+        # Execute the movement and store in case the user wants to UNDO it
+        if destination in possible_moves:
             movement_command = MovementCommand(piece, origin, destination)
             movement_command.execute()
             self.previous_movements.append(movement_command)
@@ -239,7 +261,7 @@ class Board:
             return False
 
     def __end_turn(self):
-        """Change player turn after checking for checkmate or stalemate"""
+        """Change player turn after checking for check and checkmate"""
         self.__check_check()
         self.turn = not self.turn  # Reverse turns
 
@@ -253,6 +275,7 @@ class Board:
                     player_next_moves += [move for move in piece.get_legal_moves()
                                           if
                                           Board.get_piece(move) is None or Board.get_piece(move).color != piece.color]
+
         #  We have collected all the places the player can move his pieces.
         #  If the rival king is among them, its check.
         if self.turn == WHITE:
@@ -266,6 +289,7 @@ class Board:
 
     def __check_checkmate(self, player_movements):
         """Check if, after doing a move, the rival is in checkmate ("jaque mate")"""
+
         checkmate = True
         if self.turn == WHITE:
             king_movements = self.black_king.get_legal_moves()
@@ -290,6 +314,8 @@ class Board:
 
             #  Reset game
             Board.action_reset(self)
+
+    # -------------------------------------------------------------------------------------
 
     def __str__(self):
         """Returns a human readable representation of the chess board"""

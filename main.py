@@ -1,5 +1,5 @@
 """
-The current module defines the application entry-point, consisting of:
+The main module defines the application entry-point, consisting of:
     -> A command interpreter:
          - Running in an endless loop awaiting user commands
          - Capable of parsing user commands (unrecognized commands will not be taken into account)
@@ -10,7 +10,8 @@ from colorama import init, Fore
 
 
 def ask_player_side():
-    """Greet the player and prompt the player to enter the side of the chessboard he/she would like to play as"""
+    """Greet the player and prompt the player to enter the side of the chessboard he/she would like to play as.
+    This id formality as for now the player will control both sides"""
 
     print("Welcome to 'Just Another Python Chess'")
     player_choice = input(">> On which side would you like to play: black or white [wB]? ").lower()
@@ -33,14 +34,14 @@ def parse_and_run_command(player_command):
                                                 action.startswith("action")]:
         # Existing command, try to run it
         try:
-            if len(command_keywords) == 1:
+            if len(command_keywords) == 1:  # Command with no arguments
                 print_board = getattr(game_board, command_prefix + player_command)()
-            else:
+            else:  # Command with arguments
                 print_board = getattr(game_board, command_prefix + command_keywords[0])(player_command)
             invalid_command = False
-        except SystemExit: # Allow system to exit, catch all other exceptions
+        except SystemExit:  # Allow system to exit, catch all other exceptions
             raise
-        except:
+        except:  # For other exceptions, show a warning message and hide stack trace to user
             print("There was a problem executing your instruction. Type 'help' to see available commands.")
             invalid_command = True
         finally:
@@ -54,7 +55,7 @@ def parse_and_run_command(player_command):
 
 
 def run_game(game_board):
-    """Start the infinite interpreter loop"""
+    """Start the infinite interpreter loop. Ask for commands and print the state of the board after their execution"""
     print("Turn of " + Fore.BLUE + "white" + Fore.RESET)
     print(game_board)
     while True:
@@ -82,11 +83,11 @@ def run_game(game_board):
             else:
                 print("Turn of " + Fore.RED + "black" + Fore.RESET)
             print(game_board)
-        # Input command
 
 
-init()
-player_side = ask_player_side()
-command_prefix = "action_"
-game_board = board.Board(player_side)
-run_game(game_board)
+# Beginning of the main script ----------------------------------------------
+init()  # Allow printing in color
+player_side = ask_player_side()  # Get player side
+command_prefix = "action_"  # Define the nomenclature of the methods of the board the user can access
+game_board = board.Board(player_side)  # Start a new board
+run_game(game_board)  # Start the interpreter

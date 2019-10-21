@@ -4,6 +4,7 @@ from pieces.piece import Piece
 
 
 class Bishop(Piece):
+    """The Bishop represents a chess piece capable of diagonal movement."""
     representation = "B"
     value = 3
 

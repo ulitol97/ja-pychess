@@ -5,10 +5,12 @@ from colorama import Fore
 
 
 class Piece(ABC):
+    """The Piece class is an abstract class serving as a template for all the chess pieces."""
     representation = "X"
     value = 0
 
     def __init__(self, color=None, x=None, y=None):
+        """Initialize the chess piece with a given position and color"""
         self.position = Coordinate(x, y)
         self.has_moved = False
         self.active = True
@@ -17,6 +19,7 @@ class Piece(ABC):
             self.color = board.WHITE
 
     def __str__(self):
+        """Return a letter representing the piece colored to represent its side"""
         if self.color == board.WHITE:
             return Fore.BLUE + self.representation + Fore.RESET
         elif self.color == board.BLACK:
@@ -25,6 +28,7 @@ class Piece(ABC):
             return self.representation
 
     def get_legal_moves(self):
+        """Return a list of all the movements the piece can do without leaving the board"""
         if not self.active:
             return
 
@@ -34,6 +38,7 @@ class Piece(ABC):
 
     @staticmethod
     def is_valid_move(coordinate):
+        """Check if a given coordinate is locate inside of the game board"""
         if coordinate.x >= board.Board.BOARD_SIZE or coordinate.y >= board.Board.BOARD_SIZE:
             return False
         if coordinate.x < 0 or coordinate.y < 0:

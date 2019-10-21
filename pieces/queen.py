@@ -2,6 +2,7 @@ from pieces import Rook, Bishop
 
 
 class Queen(Rook, Bishop):
+    """The Queen represents a chess piece capable of diagonal, horizontal and vertical movement."""
     representation = "Q"
     value = 9
 

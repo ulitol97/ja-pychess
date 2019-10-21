@@ -3,6 +3,7 @@ from pieces.piece import Piece
 
 
 class Knight(Piece):
+    """The Knight represents a chess piece capable of L shaped movement."""
     representation = "N"
     value = 3
 

@@ -4,7 +4,16 @@ from colorama import Fore
 
 
 class MovementCommand:
+    """
+    The MovementCommand class represents an action in which a piece is moved form ine tile to another, triggering
+    the logic consequences of the movement regarding the movement origin and destination.
+    It does not check if the movement is legal, it should be checked beforehand.
+    It is part of the Execution pattern and allows to:
+        -> Execute movements
+        -> Undo movements
+    """
     def __init__(self, piece, origin, destination):
+        """Initialize a movement command and store the necessary data to be able to undo it later"""
         self.piece = piece  # Piece affected by the movement
         self.hasMovedValue = self.piece.has_moved
         self.origin = origin  # Original coordinates of the movement
@@ -13,6 +22,7 @@ class MovementCommand:
         self.originalClass = self.piece.__class__  # In order to recover from falls in trap tiles
 
     def execute(self):
+        """Execute the movement specified in the command"""
         if self.destinationPiece is not None:
             self.destinationPiece.active = False  # Kill the piece in the destination
         board.Board.tiles[self.destination.x][self.destination.y].piece = self.piece
@@ -23,6 +33,7 @@ class MovementCommand:
         self.check_for_pawn_promotion()
 
     def undo(self):
+        """Undo the movement specified in the command, taking for granted it was executed before"""
         board.Board.tiles[self.origin.x][self.origin.y].piece = self.piece
         self.piece.position = self.origin
         self.piece.has_moved = self.hasMovedValue
@@ -33,6 +44,7 @@ class MovementCommand:
         self.check_for_pawn_promotion(True)
 
     def check_for_traps(self, undo=False):
+        """Check if the movement destination is a trap tile and activate it if it is"""
         if board.Board.tiles[self.destination.x][self.destination.y].trap is True:
             if undo is True:
                 self.piece.__class__ = self.originalClass  # Revert falling in trap
