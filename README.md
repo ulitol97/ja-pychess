@@ -5,7 +5,7 @@ Just Another Python Chess is an implementation of a terminal chess game in Pytho
 To run the game simply install python and run main.py
 
 ## Gameplay
-Once the game begins, white side goes first.
+Once the game begins, white side goes first. Yellow tiles are random traps that demote pieces to pawns.
 The state of the board is represented in the terminal as follows:
 ![ja-chess](https://user-images.githubusercontent.com/35763574/67414491-80369780-f5c3-11e9-96b3-c17fd4796587.png)
 
